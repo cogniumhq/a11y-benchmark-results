@@ -8,9 +8,9 @@ This catalog represents 52 product surfaces across 8 categories. It is a compari
 
 | State | Meaning | Catalog count |
 |---|---|---:|
-| represented | Named and classified, but no complete benchmark runner or protocol exists yet. | 42 |
+| represented | Named and classified, but no complete benchmark runner or protocol exists yet. | 39 |
 | executable | A benchmark runner or protocol exists, but this catalog does not claim a completed result. | 5 |
-| executed | A complete result exists for a pinned corpus and environment. | 5 |
+| executed | A complete result exists for a pinned corpus and environment. | 8 |
 | verified | An executed result has an independent reproduction against the same contract. | 0 |
 
 A represented tool has inventory coverage only. It has no inferred detection score, pass rate or conformance outcome. Wrappers, browser extensions and ensembles remain useful product comparisons, but they do not add an independent engine vote.
@@ -121,14 +121,14 @@ A represented tool has inventory coverage only. It has no inferred detection sco
 
 | Product surface | Surface | Access | Engine lineage | Metric family | Maturity | Readiness | Priority |
 |---|---|---|---|---|---|---|---:|
-| [Cognium Conformis](https://github.com/cogniumhq/conformis) ([result](results/2026-10-12-v0.1.0-functional-scenarios/cognium-conformis/result.json)) | site-scanner | commercial | Conformis a11y/html and tech/html-aria; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
-| [axe-core](https://github.com/dequelabs/axe-core) ([result](results/2026-10-12-v0.1.0-functional-scenarios/axe/result.json)) | automation-engine | open-source | axe-core; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
-| [Pa11y / HTML_CodeSniffer](https://github.com/pa11y/pa11y) ([result](results/2026-10-12-v0.1.0-functional-scenarios/pa11y-htmlcs/result.json)) | automation-runner | open-source | HTML_CodeSniffer; wrapper of HTML_CodeSniffer | criterion-isolated automated detection | executed | current-result | P0 |
-| [IBM Equal Access Accessibility Checker](https://github.com/IBMa/equal-access) ([result](results/2026-10-12-v0.1.0-functional-scenarios/ibm/result.json)) | automation-engine | open-source | IBM Equal Access; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
-| [Lighthouse accessibility](https://github.com/GoogleChrome/lighthouse) ([result](results/2026-10-12-v0.1.0-functional-scenarios/lighthouse/result.json)) | browser-audit | open-source | axe-core-derived Lighthouse audits; derived-surface of axe-core | criterion-isolated automated detection | executed | current-result | P0 |
-| [Siteimprove Alfa](https://github.com/Siteimprove/alfa) | automation-engine | open-source | Alfa ACT rules; independent-engine | criterion-isolated automated detection | represented | adapter-next | P1 |
-| [QualWeb](https://github.com/qualweb/qualweb) | automation-engine | open-source | QualWeb ACT, WCAG techniques and best practices; independent-engine | criterion-isolated automated detection | represented | adapter-next | P1 |
-| [Nu Html Checker](https://github.com/validator/validator) | conformance-checker | open-source | v.Nu HTML/CSS/SVG checker; independent-engine | specialized markup signal | represented | adapter-next | P1 |
+| [Cognium Conformis](https://github.com/cogniumhq/conformis) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/cognium-conformis/result.json)) | site-scanner | commercial | Conformis a11y/html and tech/html-aria; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
+| [axe-core](https://github.com/dequelabs/axe-core) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/axe/result.json)) | automation-engine | open-source | axe-core; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
+| [Pa11y / HTML_CodeSniffer](https://github.com/pa11y/pa11y) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/pa11y-htmlcs/result.json)) | automation-runner | open-source | HTML_CodeSniffer; wrapper of HTML_CodeSniffer | criterion-isolated automated detection | executed | current-result | P0 |
+| [IBM Equal Access Accessibility Checker](https://github.com/IBMa/equal-access) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/ibm/result.json)) | automation-engine | open-source | IBM Equal Access; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
+| [Lighthouse accessibility](https://github.com/GoogleChrome/lighthouse) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/lighthouse/result.json)) | browser-audit | open-source | axe-core-derived Lighthouse audits; derived-surface of axe-core | criterion-isolated automated detection | executed | current-result | P0 |
+| [Siteimprove Alfa](https://github.com/Siteimprove/alfa) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/alfa/result.json)) | automation-engine | open-source | Alfa ACT rules; independent-engine | criterion-isolated automated detection | executed | current-result | P1 |
+| [QualWeb](https://github.com/qualweb/qualweb) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/qualweb/result.json)) | automation-engine | open-source | QualWeb ACT, WCAG techniques and best practices; independent-engine | criterion-isolated automated detection | executed | current-result | P1 |
+| [Nu Html Checker](https://github.com/validator/validator) ([result](results/2026-10-13-v0.1.0-functional-scenarios-wave1/nu-html-checker/result.json)) | conformance-checker | open-source | v.Nu HTML/CSS/SVG checker; independent-engine | specialized markup signal | executed | current-result | P1 |
 | [Testaro](https://github.com/YRA-Tech/testaro) | ensemble-runner | open-source | multi-engine ensemble; ensemble-wrapper of multiple engines | orchestration parity and underlying-engine results | represented | adapter-research | P1 |
 | [WAVE Testing Engine and API](https://wave.webaim.org/api/) | engine-and-api | mixed | WAVE; independent-engine | criterion-isolated automated detection | represented | license-required | P1 |
 | [Tenon API](https://tenon.io/) | hosted-api | commercial | Tenon; unknown-proprietary | criterion-isolated automated detection | represented | license-required | P2 |

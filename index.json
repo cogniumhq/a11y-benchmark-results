@@ -39,6 +39,58 @@
       "supersedes": null,
       "bundle": "results/2026-10-12-v0.1.0-functional-scenarios",
       "report": "results/2026-10-12-v0.1.0-functional-scenarios/REPORT.md",
+      "status": "superseded",
+      "superseded_by": "2026-10-13-v0.1.0-functional-scenarios-wave1"
+    },
+    {
+      "id": "2026-10-13-v0.1.0-functional-scenarios-wave1",
+      "classification": "maintainer-authored",
+      "corpus": {
+        "repository": "cogniumhq/a11y-benchmark",
+        "version": "v0.1.0",
+        "revision": "0105c659d9fe7e85119c190910b2c53985f83374",
+        "manifest_sha256": "sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923"
+      },
+      "suite": "functional-scenarios",
+      "selected_cases": 36,
+      "corpus_cases": 234,
+      "tools": [
+        {
+          "name": "Cognium Conformis",
+          "version": "git:6876cf20c7e20d1a90017387c4d82a370f9a91fa; a11y/html@1.2.1 + tech/html-aria@1.2.1"
+        },
+        {
+          "name": "axe-core",
+          "version": "4.14.0"
+        },
+        {
+          "name": "Pa11y / HTML_CodeSniffer",
+          "version": "10.0.0"
+        },
+        {
+          "name": "IBM Equal Access",
+          "version": "4.0.34"
+        },
+        {
+          "name": "Lighthouse accessibility",
+          "version": "13.5.0"
+        },
+        {
+          "name": "Siteimprove Alfa",
+          "version": "rules 0.119.0; Puppeteer integration 0.84.2"
+        },
+        {
+          "name": "QualWeb",
+          "version": "core 0.9.5; ACT rules 0.8.6; WCAG techniques 0.4.9; best practices 0.7.13"
+        },
+        {
+          "name": "Nu Html Checker",
+          "version": "26.10.12 (0a70d65); image sha256:8f21030474e68e06905cfa801b37376e99c0e37867c653c5b6cd7e2dcaf3f503"
+        }
+      ],
+      "supersedes": "2026-10-12-v0.1.0-functional-scenarios",
+      "bundle": "results/2026-10-13-v0.1.0-functional-scenarios-wave1",
+      "report": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/REPORT.md",
       "status": "current"
     }
   ]

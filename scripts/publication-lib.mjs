@@ -37,25 +37,38 @@ export function calculateMetrics(bundle) {
     const result = readJson(file);
     const toolId = comparison.tool_order.find((id) =>
       (id === 'cognium' ? 'cognium-conformis' : id) === path.basename(path.dirname(file)));
+    const sourceTool = comparison.tools[toolId];
+    const metricFamily = sourceTool.lineage.metric_family
+      || 'criterion-isolated automated detection';
+    const isCriterionDetection = metricFamily === 'criterion-isolated automated detection';
     const defect = result.executions.filter((item) => caseById.get(item.case_id)?.mode === 'tp');
     const controls = result.executions.filter((item) => caseById.get(item.case_id)?.mode === 'safe');
     const hasFail = (execution) => execution.outcomes.some(({ verdict }) => verdict === 'fail');
     const detected = defect.filter(hasFail);
-    for (const execution of detected) union.add(execution.case_id);
+    if (isCriterionDetection) {
+      for (const execution of detected) union.add(execution.case_id);
+    }
+    const signalCases = sourceTool.cases.filter(({ automated_findings: findings }) => findings > 0);
     tools[toolId] = {
       name: result.run.tool.name,
       version: result.run.tool.version,
+      ...(sourceTool.lineage.metric_family ? { metric_family: metricFamily } : {}),
       cases: result.executions.length,
       completed: result.executions.filter(({ status }) => status === 'completed').length,
       errors: result.executions.filter(({ status }) => status === 'error').length,
-      defect_cases: defect.length,
-      defect_cases_target_detected: detected.length,
-      expected_criteria: defect.reduce((sum, item) => sum + item.outcomes.length, 0),
-      expected_criteria_matched: defect.reduce((sum, item) =>
-        sum + item.outcomes.filter(({ verdict }) => verdict === 'fail').length, 0),
-      control_cases: controls.length,
-      controls_target_clean: controls.filter((item) => !hasFail(item)).length,
-      missed_defect_cases: defect.filter((item) => !hasFail(item)).map(({ case_id }) => case_id),
+      ...(isCriterionDetection ? {
+        defect_cases: defect.length,
+        defect_cases_target_detected: detected.length,
+        expected_criteria: defect.reduce((sum, item) => sum + item.outcomes.length, 0),
+        expected_criteria_matched: defect.reduce((sum, item) =>
+          sum + item.outcomes.filter(({ verdict }) => verdict === 'fail').length, 0),
+        control_cases: controls.length,
+        controls_target_clean: controls.filter((item) => !hasFail(item)).length,
+        missed_defect_cases: defect.filter((item) => !hasFail(item)).map(({ case_id }) => case_id),
+      } : {
+        signal_pages_with_findings: signalCases.length,
+        signal_findings: signalCases.reduce((sum, item) => sum + item.automated_findings, 0),
+      }),
     };
   }
 
