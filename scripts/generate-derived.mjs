@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  ROOT,
   bundleDirectories,
   calculateMetrics,
   readJson,
@@ -124,8 +125,10 @@ function filesRecursively(directory) {
   }).sort();
 }
 
+const indexEntries = [];
 for (const bundle of bundleDirectories()) {
   const metrics = calculateMetrics(bundle);
+  const publication = readJson(path.join(bundle, 'publication.json'));
   writeJson(path.join(bundle, 'metrics.json'), metrics);
   fs.writeFileSync(path.join(bundle, 'REPORT.md'), renderReport(bundle, metrics));
   const sums = filesRecursively(bundle).map((file) => {
@@ -133,5 +136,46 @@ for (const bundle of bundleDirectories()) {
     return `${sha256(fs.readFileSync(file)).slice('sha256:'.length)}  ${relative}`;
   });
   fs.writeFileSync(path.join(bundle, 'SHA256SUMS'), `${sums.join('\n')}\n`);
+  indexEntries.push({
+    id: publication.id,
+    classification: publication.classification,
+    corpus: publication.corpus,
+    suite: metrics.suite,
+    selected_cases: metrics.coverage.selected_cases,
+    corpus_cases: metrics.coverage.corpus_cases,
+    tools: Object.values(metrics.tools).map(({ name, version }) => ({ name, version })),
+    supersedes: publication.supersedes,
+    bundle: `results/${path.basename(bundle)}`,
+    report: `results/${path.basename(bundle)}/REPORT.md`,
+  });
   console.log(`Generated metrics, report and checksums for ${path.basename(bundle)}`);
 }
+
+const supersededBy = new Map(indexEntries
+  .filter(({ supersedes }) => supersedes)
+  .map(({ id, supersedes }) => [supersedes, id]));
+const index = {
+  format: 'cognium-a11y-benchmark-result-index',
+  format_version: '1.0.0',
+  entries: indexEntries.map((entry) => ({
+    ...entry,
+    status: supersededBy.has(entry.id) ? 'superseded' : 'current',
+    ...(supersededBy.has(entry.id) ? { superseded_by: supersededBy.get(entry.id) } : {}),
+  })),
+};
+writeJson(path.join(ROOT, 'index.json'), index);
+const indexLines = [
+  '# Public benchmark result index',
+  '',
+  'A listing means the bundle passes format and disclosure validation. It is not certification, endorsement or a conformance claim.',
+  '',
+  '| Bundle | Classification | Corpus | Suite | Scope | Products | Status |',
+  '|---|---|---|---|---:|---:|---|',
+  ...index.entries.map((entry) =>
+    `| [\`${entry.id}\`](${entry.report}) | ${entry.classification} | \`${entry.corpus.version}\` | \`${entry.suite}\` | ${entry.selected_cases}/${entry.corpus_cases} | ${entry.tools.length} | ${entry.status}${entry.superseded_by ? ` by \`${entry.superseded_by}\`` : ''} |`),
+  '',
+  'Classifications are declared by the publisher. Corrections add a new immutable bundle and retain the superseded entry.',
+  '',
+];
+fs.writeFileSync(path.join(ROOT, 'INDEX.md'), indexLines.join('\n'));
+console.log(`Generated public index with ${index.entries.length} bundle(s)`);

@@ -10,9 +10,9 @@ guarantee about production websites.
 
 ## Published bundles
 
-| Bundle | Classification | Corpus | Scope |
-|---|---|---|---:|
-| [`2026-10-12-v0.1.0-functional-scenarios`](results/2026-10-12-v0.1.0-functional-scenarios/) | maintainer-authored | `v0.1.0` | 36/234 automated cases |
+See the generated [public result index](INDEX.md). It distinguishes
+vendor-authored, independently reproduced, academic and maintainer-authored
+results and keeps superseded bundles discoverable.
 
 Each bundle contains one schema-valid `result.json` per product, a method note,
 the normalized comparison data, mapping code, metrics, a human-readable report,

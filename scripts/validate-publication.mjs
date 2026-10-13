@@ -32,6 +32,7 @@ function verifyChecksums(bundle) {
 
 const bundles = bundleDirectories();
 assert.ok(bundles.length > 0, 'no result bundles found');
+const bundleIds = new Set(bundles.map((bundle) => path.basename(bundle)));
 
 for (const bundle of bundles) {
   const publication = readJson(path.join(bundle, 'publication.json'));
@@ -44,6 +45,11 @@ for (const bundle of bundles) {
 
   assert.ok(['vendor-authored', 'independently-reproduced', 'academic', 'maintainer-authored']
     .includes(publication.classification));
+  assert.equal(publication.id, path.basename(bundle));
+  if (publication.supersedes !== null) {
+    assert.ok(bundleIds.has(publication.supersedes), `${publication.id} supersedes an unknown bundle`);
+    assert.notEqual(publication.supersedes, publication.id, 'a bundle cannot supersede itself');
+  }
   assert.equal(publication.corpus.revision, comparison.corpus.revision);
   assert.equal(publication.corpus.manifest_sha256, comparison.corpus.manifest_sha256);
   assert.equal(comparison.coverage.selected_cases, comparison.cases.length);
@@ -91,3 +97,8 @@ for (const bundle of bundles) {
     /(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})/);
   console.log(`valid publication bundle: ${path.relative(process.cwd(), bundle)}`);
 }
+
+const publicIndex = readJson(path.join(process.cwd(), 'index.json'));
+assert.equal(publicIndex.format, 'cognium-a11y-benchmark-result-index');
+assert.deepEqual(publicIndex.entries.map(({ id }) => id).sort(), [...bundleIds].sort());
+assert.match(fs.readFileSync(path.join(process.cwd(), 'INDEX.md'), 'utf8'), /not certification, endorsement/i);
