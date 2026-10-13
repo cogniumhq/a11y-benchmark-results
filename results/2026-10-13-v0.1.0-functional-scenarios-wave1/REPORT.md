@@ -10,7 +10,7 @@ This is a single-run, finite-corpus detection comparison. It is not WCAG certifi
 
 - Corpus: `cogniumhq/a11y-benchmark@v0.1.0` (`0105c659d9fe7e85119c190910b2c53985f83374`).
 - Corpus manifest: `sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923`.
-- Comparison harness: `cogniumhq/a11y-validation@fea3d3c7926b9a4c47a126695a8b5a50b062b6a6` ([review PR](https://github.com/cogniumhq/a11y-validation/pull/10)).
+- Comparison harness: `cogniumhq/a11y-validation@588b27e2d79741592b0acf37e01ff04dcd4a98d3` ([review PR](https://github.com/cogniumhq/a11y-validation/pull/10)).
 - Cognium Conformis run source: `cogniumhq/conformis@6876cf20c7e20d1a90017387c4d82a370f9a91fa`.
 - Latest upstream `main` verified: `6876cf20c7e20d1a90017387c4d82a370f9a91fa`; the executed revision matched upstream main when verified for this run.
 - Executed automated lane: 36/234 corpus cases (198 not executed).

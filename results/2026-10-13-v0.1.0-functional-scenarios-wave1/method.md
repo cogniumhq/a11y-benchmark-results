@@ -22,7 +22,7 @@ or local path is published.
 - Cognium Conformis commit:
   `6876cf20c7e20d1a90017387c4d82a370f9a91fa`
 - Comparison harness commit:
-  `fea3d3c7926b9a4c47a126695a8b5a50b062b6a6`
+  `588b27e2d79741592b0acf37e01ff04dcd4a98d3`
 - Declared-flow file:
   `sha256:6044a07c187da76ec07e7e6f706179a096bc49f9bbdfbfe2aa779a36a6b757dd`
 
