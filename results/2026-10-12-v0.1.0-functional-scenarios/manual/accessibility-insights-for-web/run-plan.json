@@ -1,0 +1,72 @@
+{
+  "format": "cognium-a11y-manual-tool-run-plan",
+  "format_version": "1.0.0",
+  "execution_status": "not-executed",
+  "tool": {
+    "id": "accessibility-insights-for-web",
+    "name": "Accessibility Insights for Web",
+    "version": "2.49.0",
+    "engine_family": "axe-core",
+    "engine_version": "4.11.3"
+  },
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "0105c659d9fe7e85119c190910b2c53985f83374",
+    "manifest_sha256": "sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923"
+  },
+  "selection": {
+    "source": "../../comparison.json",
+    "selected_cases": 36
+  },
+  "lanes": [
+    {
+      "id": "fastpass-automated",
+      "type": "automated-derived",
+      "status": "not-executed",
+      "metric_policy": "Report as an axe-derived product configuration; exclude from the independent-engine union."
+    },
+    {
+      "id": "fastpass-needs-review",
+      "type": "human-guided",
+      "status": "not-executed",
+      "metric_policy": "Report reviewer decisions separately from automated findings."
+    },
+    {
+      "id": "fastpass-tab-stops",
+      "type": "human-guided",
+      "status": "not-executed",
+      "corpus_protocol": "keyboard-task@1.0.0",
+      "metric_policy": "Report step outcomes with the corpus human-result vocabulary."
+    },
+    {
+      "id": "assessment",
+      "type": "human-guided",
+      "status": "not-executed",
+      "metric_policy": "Report applicable requirement outcomes without averaging them into automated recall."
+    }
+  ],
+  "required_environment": [
+    "extension_version",
+    "embedded_engine_version",
+    "browser",
+    "browser_version",
+    "platform",
+    "platform_version",
+    "viewport",
+    "zoom",
+    "display_settings",
+    "locale",
+    "input_method",
+    "telemetry_enabled",
+    "started_at",
+    "completed_at"
+  ],
+  "privacy": {
+    "fixture_data": "public-synthetic",
+    "participant_data_included": false,
+    "production_evidence_included": false,
+    "credentials_allowed": false
+  },
+  "results": []
+}

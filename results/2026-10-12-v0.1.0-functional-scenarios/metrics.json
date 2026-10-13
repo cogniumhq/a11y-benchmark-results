@@ -1,0 +1,170 @@
+{
+  "format": "cognium-a11y-benchmark-metrics",
+  "format_version": "1.0.0",
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "0105c659d9fe7e85119c190910b2c53985f83374",
+    "manifest_sha256": "sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923"
+  },
+  "suite": "functional-scenarios",
+  "coverage": {
+    "corpus_cases": 234,
+    "corpus_families": 12,
+    "selected_cases": 36,
+    "not_selected_cases": 198,
+    "human_protocols": 8
+  },
+  "tools": {
+    "cognium": {
+      "name": "Cognium Conformis",
+      "version": "git:25d5253000df278f4a5fab5b690cee635a01e47a; a11y/html@1.2.1 + tech/html-aria@1.2.1",
+      "cases": 36,
+      "completed": 36,
+      "errors": 0,
+      "defect_cases": 18,
+      "defect_cases_target_detected": 9,
+      "expected_criteria": 18,
+      "expected_criteria_matched": 9,
+      "control_cases": 18,
+      "controls_target_clean": 18,
+      "missed_defect_cases": [
+        "static-input_purpose_missing",
+        "static-ambiguous_link_purpose",
+        "static-vague_heading_and_label",
+        "scenario-keyboard_trap",
+        "scenario-meaningful_sequence",
+        "scenario-text_spacing",
+        "scenario-rtl_mixed_language",
+        "scenario-pointer_cancellation",
+        "scenario-error_suggestion"
+      ]
+    },
+    "axe": {
+      "name": "axe-core",
+      "version": "4.14.0",
+      "cases": 36,
+      "completed": 36,
+      "errors": 0,
+      "defect_cases": 18,
+      "defect_cases_target_detected": 6,
+      "expected_criteria": 18,
+      "expected_criteria_matched": 6,
+      "control_cases": 18,
+      "controls_target_clean": 18,
+      "missed_defect_cases": [
+        "static-input_purpose_missing",
+        "static-ambiguous_link_purpose",
+        "static-vague_heading_and_label",
+        "keyboard-focus_not_visible",
+        "keyboard-focus_obscured",
+        "scenario-keyboard_trap",
+        "scenario-meaningful_sequence",
+        "scenario-text_spacing",
+        "scenario-rtl_mixed_language",
+        "scenario-pointer_cancellation",
+        "scenario-error_suggestion",
+        "static-field_no_visible_label"
+      ]
+    },
+    "pa11y-htmlcs": {
+      "name": "Pa11y / HTML_CodeSniffer",
+      "version": "10.0.0",
+      "cases": 36,
+      "completed": 36,
+      "errors": 0,
+      "defect_cases": 18,
+      "defect_cases_target_detected": 4,
+      "expected_criteria": 18,
+      "expected_criteria_matched": 4,
+      "control_cases": 18,
+      "controls_target_clean": 18,
+      "missed_defect_cases": [
+        "static-input_purpose_missing",
+        "static-viewport_no_zoom",
+        "static-ambiguous_link_purpose",
+        "static-vague_heading_and_label",
+        "keyboard-focus_not_visible",
+        "keyboard-focus_obscured",
+        "scenario-keyboard_trap",
+        "scenario-meaningful_sequence",
+        "scenario-text_spacing",
+        "scenario-rtl_mixed_language",
+        "scenario-label_in_name",
+        "scenario-pointer_cancellation",
+        "scenario-error_suggestion",
+        "static-field_no_visible_label"
+      ]
+    },
+    "ibm": {
+      "name": "IBM Equal Access",
+      "version": "4.0.34",
+      "cases": 36,
+      "completed": 36,
+      "errors": 0,
+      "defect_cases": 18,
+      "defect_cases_target_detected": 5,
+      "expected_criteria": 18,
+      "expected_criteria_matched": 5,
+      "control_cases": 18,
+      "controls_target_clean": 18,
+      "missed_defect_cases": [
+        "static-input_purpose_missing",
+        "static-viewport_no_zoom",
+        "static-ambiguous_link_purpose",
+        "static-vague_heading_and_label",
+        "keyboard-focus_not_visible",
+        "keyboard-focus_obscured",
+        "scenario-keyboard_trap",
+        "scenario-meaningful_sequence",
+        "scenario-text_spacing",
+        "scenario-rtl_mixed_language",
+        "scenario-pointer_cancellation",
+        "scenario-error_suggestion",
+        "static-field_no_visible_label"
+      ]
+    },
+    "lighthouse": {
+      "name": "Lighthouse accessibility",
+      "version": "13.5.0",
+      "cases": 36,
+      "completed": 36,
+      "errors": 0,
+      "defect_cases": 18,
+      "defect_cases_target_detected": 6,
+      "expected_criteria": 18,
+      "expected_criteria_matched": 6,
+      "control_cases": 18,
+      "controls_target_clean": 18,
+      "missed_defect_cases": [
+        "static-input_purpose_missing",
+        "static-ambiguous_link_purpose",
+        "static-vague_heading_and_label",
+        "keyboard-focus_not_visible",
+        "keyboard-focus_obscured",
+        "scenario-keyboard_trap",
+        "scenario-meaningful_sequence",
+        "scenario-text_spacing",
+        "scenario-rtl_mixed_language",
+        "scenario-pointer_cancellation",
+        "scenario-error_suggestion",
+        "static-field_no_visible_label"
+      ]
+    }
+  },
+  "union": {
+    "defect_cases": 18,
+    "defect_cases_target_detected": 9,
+    "common_misses": [
+      "static-input_purpose_missing",
+      "static-ambiguous_link_purpose",
+      "static-vague_heading_and_label",
+      "scenario-keyboard_trap",
+      "scenario-meaningful_sequence",
+      "scenario-text_spacing",
+      "scenario-rtl_mixed_language",
+      "scenario-pointer_cancellation",
+      "scenario-error_suggestion"
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+name: Published benchmark result
+description: Request listing of a public, immutable a11y-benchmark result bundle
+title: "[Published result]: "
+labels: [published-result]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Listing confirms only that disclosure is complete and files validate. It is not certification, endorsement, legal advice or a conformance claim. Do not include credentials, customer targets, production captures, private selectors, personal information or internal paths.
+  - type: dropdown
+    id: classification
+    attributes:
+      label: Authorship classification
+      options:
+        - vendor-authored
+        - independently-reproduced
+        - academic
+        - maintainer-authored
+    validations:
+      required: true
+  - type: input
+    id: immutable_bundle
+    attributes:
+      label: Immutable public bundle URL
+      description: Link to a commit-pinned URL, release asset or archived DOI, not a moving branch.
+      placeholder: https://github.com/org/repo/tree/40-character-commit/results/bundle-id
+    validations:
+      required: true
+  - type: input
+    id: corpus_revision
+    attributes:
+      label: Corpus tag and 40-character commit
+      placeholder: v0.1.0 at 0105c659d9fe7e85119c190910b2c53985f83374
+    validations:
+      required: true
+  - type: input
+    id: manifest_digest
+    attributes:
+      label: corpus-manifest.json SHA-256
+      placeholder: sha256:...
+    validations:
+      required: true
+  - type: textarea
+    id: products
+    attributes:
+      label: Product builds and engine lineage
+      description: List exact product versions/builds, interfaces, engine families, independence and wrapper relationships.
+    validations:
+      required: true
+  - type: input
+    id: method
+    attributes:
+      label: Method and mapping URL
+      description: Link to commands, configuration, state driver, sampling, mapping logic and manual decisions.
+    validations:
+      required: true
+  - type: input
+    id: validation
+    attributes:
+      label: Validation evidence URL
+      description: Link to passing schema, checksum, privacy and generated-artifact checks.
+    validations:
+      required: true
+  - type: input
+    id: supersedes
+    attributes:
+      label: Superseded result
+      description: If this is a correction, link the prior immutable bundle. Otherwise enter none.
+      placeholder: none
+    validations:
+      required: true
+  - type: checkboxes
+    id: attestations
+    attributes:
+      label: Publication attestations
+      options:
+        - label: Every completed, blocked, unsupported and errored execution is represented.
+          required: true
+        - label: Raw native output is published, or its digest and omission reason are disclosed.
+          required: true
+        - label: Human and assistive-technology results are separate from automated metrics.
+          required: true
+        - label: The bundle contains no credentials, customer data, production captures, personal information or internal paths.
+          required: true
+        - label: I understand listing is format validation, not certification or endorsement.
+          required: true
