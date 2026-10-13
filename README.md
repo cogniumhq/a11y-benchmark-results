@@ -37,10 +37,14 @@ For example, the current bundle measures axe-core directly, inventories the axe
 DevTools browser extension without double-counting it, and provides a separate
 assisted/manual execution protocol for Accessibility Insights for Web.
 
-The current Wave 1 bundle adds Siteimprove Alfa and QualWeb to the comparable
-criterion-detection lane. Nu Html Checker is executed against the same pages,
-but its native markup findings stay in a separate specialized-signal lane and
-do not contribute to WCAG criterion recall or the criterion-mapped union.
+The latest browser-served bundle expands the comparable automated lane from the
+original 36-page functional slice to 214 of 270 corpus cases: 110 known-defect
+pages, 104 corrected controls, 189 target assertions and 54 distinct WCAG
+criteria. The product union detects 18 of those 54 criteria; that measured
+result must not be confused with the earlier fixed 18-scenario denominator.
+Siteimprove Alfa and QualWeb remain in the criterion-mapped lane. Nu Html
+Checker runs against the same pages, but its markup findings stay in a separate
+specialized-signal lane and do not contribute to WCAG criterion recall.
 
 ## Validate
 
