@@ -16,8 +16,14 @@ results and keeps superseded bundles discoverable.
 
 Each bundle contains one schema-valid `result.json` per product, a method note,
 the normalized comparison data, mapping code, metrics, a human-readable report,
-native-output digest disclosure and checksums. Human and assistive-technology
-evaluations are separate lanes and are never averaged into automated results.
+native-output digest disclosure, a product-surface inventory and checksums.
+Human and assistive-technology evaluations are separate lanes and are never
+averaged into automated results.
+
+The inventory distinguishes an engine from interfaces built on that engine.
+For example, the current bundle measures axe-core directly, inventories the axe
+DevTools browser extension without double-counting it, and provides a separate
+assisted/manual execution protocol for Accessibility Insights for Web.
 
 ## Validate
 

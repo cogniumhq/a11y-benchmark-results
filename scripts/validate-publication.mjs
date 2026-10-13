@@ -30,6 +30,78 @@ function verifyChecksums(bundle) {
   }
 }
 
+function validateToolSurfaceInventory(bundle, resultNames) {
+  const inventoryFile = path.join(bundle, 'tool-surfaces.json');
+  assert.ok(fs.existsSync(inventoryFile), 'tool-surfaces.json is required');
+  const inventory = readJson(inventoryFile);
+  assert.equal(inventory.format, 'cognium-a11y-tool-surface-inventory');
+  assert.equal(inventory.format_version, '1.0.0');
+  assert.match(inventory.observed_on, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(inventory.surfaces.length > 0, 'tool surface inventory is empty');
+
+  const ids = new Set();
+  const executedNames = new Set();
+  for (const surface of inventory.surfaces) {
+    assert.equal(ids.has(surface.id), false, `duplicate tool surface ID: ${surface.id}`);
+    ids.add(surface.id);
+    assert.ok(['automated', 'automated-and-guided', 'automated-assisted-and-manual']
+      .includes(surface.measurement_lane), `${surface.id} has an invalid lane`);
+    assert.ok(['executed', 'not-executed'].includes(surface.execution_status),
+      `${surface.id} has an invalid execution status`);
+    assert.ok(['independent-engine', 'wrapper', 'derived-configuration', 'derived-surface']
+      .includes(surface.lineage.independence), `${surface.id} has invalid lineage`);
+    if (surface.lineage.independence !== 'independent-engine') {
+      assert.ok(surface.lineage.wrapper_of, `${surface.id} must declare wrapper_of`);
+    }
+    assert.ok(surface.sources.length > 0, `${surface.id} has no authoritative source`);
+    assert.equal(surface.sources.every((source) => /^https:\/\//.test(source)), true,
+      `${surface.id} contains a non-HTTPS source`);
+
+    if (surface.execution_status === 'executed') {
+      assert.equal(surface.included_in_automated_metrics, true,
+        `${surface.id} executed automated surface must be represented in metrics`);
+      assert.ok(surface.result_path, `${surface.id} is missing result_path`);
+      const resultPath = path.resolve(bundle, surface.result_path);
+      assert.ok(resultPath.startsWith(`${path.resolve(bundle)}${path.sep}`),
+        `${surface.id} result path escapes bundle`);
+      assert.ok(fs.existsSync(resultPath), `${surface.id} result file is missing`);
+      assert.equal(readJson(resultPath).run.tool.name, surface.name,
+        `${surface.id} name does not match its result`);
+      executedNames.add(surface.name);
+    } else {
+      assert.equal(surface.included_in_automated_metrics, false,
+        `${surface.id} cannot be included without an execution`);
+      assert.equal('result_path' in surface, false,
+        `${surface.id} must not point to a result when it was not executed`);
+    }
+
+    for (const key of ['protocol_path', 'run_plan_path']) {
+      if (!surface[key]) continue;
+      const supportingPath = path.resolve(bundle, surface[key]);
+      assert.ok(supportingPath.startsWith(`${path.resolve(bundle)}${path.sep}`),
+        `${surface.id} ${key} escapes bundle`);
+      assert.ok(fs.existsSync(supportingPath), `${surface.id} ${key} is missing`);
+    }
+  }
+
+  assert.deepEqual([...executedNames].sort(), [...resultNames].sort(),
+    'executed tool surfaces must match the published result files exactly');
+
+  const plan = readJson(path.join(bundle,
+    'manual/accessibility-insights-for-web/run-plan.json'));
+  assert.equal(plan.format, 'cognium-a11y-manual-tool-run-plan');
+  assert.equal(plan.format_version, '1.0.0');
+  assert.equal(plan.execution_status, 'not-executed');
+  assert.equal(plan.results.length, 0, 'an unexecuted plan cannot contain results');
+  assert.equal(plan.selection.selected_cases,
+    readJson(path.join(bundle, 'comparison.json')).coverage.selected_cases);
+  assert.equal(plan.lanes.every(({ status }) => status === 'not-executed'), true);
+  assert.equal(plan.privacy.fixture_data, 'public-synthetic');
+  assert.equal(plan.privacy.participant_data_included, false);
+  assert.equal(plan.privacy.production_evidence_included, false);
+  assert.equal(plan.privacy.credentials_allowed, false);
+}
+
 const bundles = bundleDirectories();
 assert.ok(bundles.length > 0, 'no result bundles found');
 const bundleIds = new Set(bundles.map((bundle) => path.basename(bundle)));
@@ -82,9 +154,13 @@ for (const bundle of bundles) {
     }
   }
 
+  validateToolSurfaceInventory(bundle, names);
+
   assert.equal(canonical(readJson(path.join(bundle, 'metrics.json'))), canonical(calculateMetrics(bundle)),
     `${path.basename(bundle)} metrics are stale`);
   assert.match(fs.readFileSync(path.join(bundle, 'REPORT.md'), 'utf8'), /not WCAG certification/i);
+  assert.match(fs.readFileSync(path.join(bundle, 'REPORT.md'), 'utf8'),
+    /Accessibility Insights for Web is protocol-ready but not executed/i);
   verifyChecksums(bundle);
 
   const publicText = fs.readdirSync(bundle, { recursive: true, withFileTypes: true })

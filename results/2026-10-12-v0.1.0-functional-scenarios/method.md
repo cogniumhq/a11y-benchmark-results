@@ -92,6 +92,28 @@ credits only findings mapped to each pair's declared criterion.
 - `violations` counted as automated findings; `incomplete` retained as review
   items in the normalized comparison
 
+### axe DevTools browser extension
+
+- Store version observed on the publication date: `4.138.0`
+- The vendor describes the free page-by-page automated scan as running on
+  axe-core
+- Not separately executed in this bundle and not counted as another independent
+  engine vote
+- A future product-surface run must pin the free or pro edition, enabled guided
+  or AI features, extension build, embedded axe-core version, browser profile,
+  telemetry setting and exported evidence
+
+### Accessibility Insights for Web
+
+- Store version observed on the publication date: `2.49.0`
+- The matching tagged source manifest pins axe-core `4.11.3`
+- FastPass automated checks are axe-derived; Needs Review and the assisted Tab
+  Stops test require a reviewer, and Assessment includes manual/assisted tests
+- Protocol-ready but not executed in this bundle, so it has no detection count,
+  pass/fail outcome or contribution to the automated union
+- See [`manual/accessibility-insights-for-web/PROTOCOL.md`](manual/accessibility-insights-for-web/PROTOCOL.md)
+  for the full execution and publication contract
+
 ### Pa11y / HTML_CodeSniffer
 
 - Pa11y version: `10.0.0`

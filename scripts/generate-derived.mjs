@@ -22,6 +22,7 @@ const mark = (row) => {
 function renderReport(bundle, metrics) {
   const comparison = readJson(path.join(bundle, 'comparison.json'));
   const publication = readJson(path.join(bundle, 'publication.json'));
+  const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
   const results = resultFiles(bundle).map(readJson);
   const resultByName = new Map(results.map((result) => [result.run.tool.name, result]));
   const toolIds = comparison.tool_order;
@@ -69,6 +70,21 @@ function renderReport(bundle, metrics) {
     }),
     '',
     'Lighthouse uses axe-derived accessibility audits. It is included as a product configuration comparison, not as an independent engine vote.',
+    '',
+    '## Product surface inventory',
+    '',
+    'The measured engines and the requested browser extensions are tracked together here, while their evidence lanes and engine lineage remain separate.',
+    '',
+    '| Product surface | Version | Lane | Engine lineage | Status in this bundle | Metric treatment |',
+    '|---|---|---|---|---|---|',
+    ...inventory.surfaces.map((surface) => {
+      const lineage = surface.lineage;
+      const engine = `${lineage.engine_family}${lineage.engine_version ? ` ${lineage.engine_version}` : ' (version not established)'}`;
+      const relationship = lineage.wrapper_of ? `${lineage.independence} of ${lineage.wrapper_of}` : lineage.independence;
+      return `| ${surface.name} | ${surface.version} | ${surface.measurement_lane} | ${engine}; ${relationship} | ${surface.execution_status} | ${surface.metric_treatment} |`;
+    }),
+    '',
+    'axe DevTools is inventoried but was not separately executed because its free automated checks run on axe-core; counting that surface as another independent engine result would duplicate the axe family. Accessibility Insights for Web is protocol-ready but not executed: its FastPass automated checks are axe-derived, while Needs Review, Tab Stops and Assessment require separate human-guided evidence. See [the Accessibility Insights protocol](manual/accessibility-insights-for-web/PROTOCOL.md) and [run plan](manual/accessibility-insights-for-web/run-plan.json).',
     '',
     '## Execution environments',
     '',

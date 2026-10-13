@@ -42,6 +42,22 @@ The five-product union detected the declared target criterion on 9/18 known-defe
 
 Lighthouse uses axe-derived accessibility audits. It is included as a product configuration comparison, not as an independent engine vote.
 
+## Product surface inventory
+
+The measured engines and the requested browser extensions are tracked together here, while their evidence lanes and engine lineage remain separate.
+
+| Product surface | Version | Lane | Engine lineage | Status in this bundle | Metric treatment |
+|---|---|---|---|---|---|
+| Cognium Conformis | git:25d5253000df278f4a5fab5b690cee635a01e47a; a11y/html@1.2.1 + tech/html-aria@1.2.1 | automated | Conformis a11y/html and tech/html-aria a11y/html@1.2.1 + tech/html-aria@1.2.1; independent-engine | executed | Measured as the Cognium Conformis site-scanner configuration with subject-declared flows. |
+| axe-core | 4.14.0 | automated | axe-core 4.14.0; independent-engine | executed | Measured directly through Playwright page injection and counted once as the axe-core engine result. |
+| axe DevTools - Web Accessibility Testing | 4.138.0 | automated-and-guided | axe-core (version not established); derived-surface of axe-core | not-executed | Inventoried as a product surface but not counted as a second independent engine vote; a future extension run must report its exact edition, enabled features and embedded engine version. |
+| Pa11y / HTML_CodeSniffer | 10.0.0 | automated | HTML_CodeSniffer 2.6.0; wrapper of HTML_CodeSniffer | executed | Measured through Pa11y's HTML_CodeSniffer runner; the optional axe runner was excluded to avoid duplicate axe measurements. |
+| IBM Equal Access | 4.0.34 | automated | IBM Equal Access Accessibility Checker 4.0.34; independent-engine | executed | Measured directly with the WCAG 2.2 policy. |
+| Lighthouse accessibility | 13.5.0 | automated | axe-core-derived Lighthouse audits 4.14.0; derived-configuration of axe-core | executed | Measured as a product configuration but excluded from claims about independent engine agreement. |
+| Accessibility Insights for Web | 2.49.0 | automated-assisted-and-manual | axe-core 4.11.3; derived-surface of axe-core | not-executed | FastPass automated checks are axe-derived and must not be counted as an independent engine vote. Needs Review, Tab Stops and Assessment remain separate human-guided results. |
+
+axe DevTools is inventoried but was not separately executed because its free automated checks run on axe-core; counting that surface as another independent engine result would duplicate the axe family. Accessibility Insights for Web is protocol-ready but not executed: its FastPass automated checks are axe-derived, while Needs Review, Tab Stops and Assessment require separate human-guided evidence. See [the Accessibility Insights protocol](manual/accessibility-insights-for-web/PROTOCOL.md) and [run plan](manual/accessibility-insights-for-web/run-plan.json).
+
 ## Execution environments
 
 | Tool | OS | Runtime | Browser | Viewport | Run window (UTC) |
