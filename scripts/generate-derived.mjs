@@ -1,0 +1,137 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+import {
+  bundleDirectories,
+  calculateMetrics,
+  readJson,
+  resultFiles,
+  sha256,
+  writeJson,
+} from './publication-lib.mjs';
+
+const pct = (part, whole) => whole ? `${Math.round((part / whole) * 100)}%` : 'n/a';
+const mark = (row) => {
+  if (row.status === 'error') return 'E';
+  if (row.matched_expected_criteria.length) return 'T';
+  if (row.automated_findings > 0) return 'o';
+  return '.';
+};
+
+function renderReport(bundle, metrics) {
+  const comparison = readJson(path.join(bundle, 'comparison.json'));
+  const publication = readJson(path.join(bundle, 'publication.json'));
+  const results = resultFiles(bundle).map(readJson);
+  const resultByName = new Map(results.map((result) => [result.run.tool.name, result]));
+  const toolIds = comparison.tool_order;
+  const toolNames = toolIds.map((id) => metrics.tools[id].name);
+  const commonMisses = metrics.union.common_misses.map((id) => `\`${id}\``).join(', ');
+  const lines = [
+    '# Accessibility benchmark comparison: v0.1.0 functional scenarios',
+    '',
+    `Published run date: ${publication.run_local_date} (${publication.timezone}).`,
+    '',
+    `Classification: **${publication.classification}**. This bundle was produced by the corpus maintainers and is not an independent reproduction.`,
+    '',
+    'This is a single-run, finite-corpus detection comparison. It is not WCAG certification, legal advice, a universal product ranking, a performance benchmark or a guarantee about production websites.',
+    '',
+    '## Identity and scope',
+    '',
+    `- Corpus: \`${comparison.corpus.repository}@${comparison.corpus.version}\` (\`${comparison.corpus.revision}\`).`,
+    `- Corpus manifest: \`${comparison.corpus.manifest_sha256}\`.`,
+    `- Comparison harness: \`${publication.harness.repository}@${publication.harness.revision}\` ([review PR](${publication.harness.pull_request})).`,
+    `- Cognium Conformis source: \`${publication.cognium_conformis.repository}@${publication.cognium_conformis.revision}\`.`,
+    `- Executed automated lane: ${comparison.coverage.selected_cases}/${comparison.coverage.corpus_cases} corpus cases (${comparison.coverage.not_selected_cases} not executed).`,
+    `- Human and assistive-technology protocols executed: 0/${comparison.coverage.human_protocols}.`,
+    '',
+    'The unexecuted cases and protocols are neither passes nor failures. JAWS, NVDA, VoiceOver, TalkBack, keyboard, switch, voice, media-equivalence, display-adaptation, comprehension and user-task work remains in separate lanes.',
+    '',
+    '## Results',
+    '',
+    '| Tool | Known-defect criteria detected | Corrected controls target-clean | Completed | Errors |',
+    '|---|---:|---:|---:|---:|',
+    ...toolIds.map((id) => {
+      const item = metrics.tools[id];
+      return `| ${item.name} | ${item.expected_criteria_matched}/${item.expected_criteria} (${pct(item.expected_criteria_matched, item.expected_criteria)}) | ${item.controls_target_clean}/${item.control_cases} | ${item.completed}/${item.cases} | ${item.errors} |`;
+    }),
+    '',
+    `The five-product union detected the declared target criterion on ${metrics.union.defect_cases_target_detected}/${metrics.union.defect_cases} known-defect cases (${pct(metrics.union.defect_cases_target_detected, metrics.union.defect_cases)}). “Target-clean” means only that a tool did not report the corrected control's declared criterion; it does not establish conformance or a pass.`,
+    '',
+    '## Tool lineage',
+    '',
+    '| Tool | Version/build | Engine family | Independence | Interface |',
+    '|---|---|---|---|---|',
+    ...results.map((result) => {
+      const tool = result.run.tool;
+      return `| ${tool.name} | ${tool.version} | ${tool.engine_family} | ${tool.independence}${tool.wrapper_of ? ` of ${tool.wrapper_of}` : ''} | ${tool.tool_surface} |`;
+    }),
+    '',
+    'Lighthouse uses axe-derived accessibility audits. It is included as a product configuration comparison, not as an independent engine vote.',
+    '',
+    '## Execution environments',
+    '',
+    '| Tool | OS | Runtime | Browser | Viewport | Run window (UTC) |',
+    '|---|---|---|---|---|---|',
+    ...results.map((result) => {
+      const run = result.run;
+      const environment = run.environment;
+      return `| ${run.tool.name} | ${environment.os} | ${environment.runtime} | ${environment.browser} ${environment.browser_version} | ${environment.viewport.width}×${environment.viewport.height} | ${run.started_at} – ${run.completed_at} |`;
+    }),
+    '',
+    'Cognium Conformis ran in Linux/arm64 while the four directly executed competitor adapters ran in macOS/arm64, and the Chromium patch versions differ. The corpus, viewport and criterion mapping were pinned, but this is not a perfectly environment-controlled head-to-head trial. Treat the counts as a reproducible product snapshot, not a claim that OS and browser-build effects are zero.',
+    '',
+    '## Case matrix',
+    '',
+    'Legend: `T` declared target criterion detected; `o` another automated finding only; `.` no automated finding; `E` execution error.',
+    '',
+    `| Case | Expected | ${toolNames.join(' | ')} |`,
+    `|---|---|${toolNames.map(() => '---:').join('|')}|`,
+    ...comparison.cases.map((item) => {
+      const cells = toolIds.map((id) => {
+        const row = comparison.tools[id].cases.find(({ id: caseId }) => caseId === item.id);
+        return mark(row);
+      });
+      return `| \`${item.id}\` | ${item.mode === 'tp' ? 'known defect' : 'corrected control'} | ${cells.join(' | ')} |`;
+    }),
+    '',
+    '## Shared gaps',
+    '',
+    `No tool mapped the declared criterion on ${metrics.union.common_misses.length} known-defect cases: ${commonMisses}.`,
+    '',
+    'These misses identify automation and scenario-driver backlog. They are not evidence that the fixtures pass. Some require interaction, state transitions, visual judgment, comprehension or a person using assistive technology.',
+    '',
+    '## Evidence and interpretation limits',
+    '',
+    '- Every product has one repetition; this bundle does not estimate run-to-run variance.',
+    '- Native product outputs are represented by per-case SHA-256 digests. Raw Cognium Conformis proofgraph evidence and raw third-party outputs are not redistributed.',
+    '- Criterion credit is conservative and requires an explicit native-rule-to-WCAG mapping. A tool can report another issue and receive no target credit.',
+    '- `cannot-tell` is preserved when no mapped finding exists. It is never converted into pass.',
+    '- Durations are diagnostic only and are not used as a product speed ranking.',
+    '- The eight pipeline-integrity cases were outside this lane; the v0.1.0 HTTP server omission is tracked in [a11y-benchmark issue #19](https://github.com/cogniumhq/a11y-benchmark/issues/19).',
+    '- Corrections must publish a new immutable revision and retain this bundle with a supersession link.',
+    '',
+    'See [method.md](method.md), [metrics.json](metrics.json), [comparison.json](comparison.json) and each product’s schema-valid `result.json` for the reproducible evidence.',
+    '',
+  ];
+  return lines.join('\n');
+}
+
+function filesRecursively(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) return filesRecursively(file);
+    return entry.name === 'SHA256SUMS' ? [] : [file];
+  }).sort();
+}
+
+for (const bundle of bundleDirectories()) {
+  const metrics = calculateMetrics(bundle);
+  writeJson(path.join(bundle, 'metrics.json'), metrics);
+  fs.writeFileSync(path.join(bundle, 'REPORT.md'), renderReport(bundle, metrics));
+  const sums = filesRecursively(bundle).map((file) => {
+    const relative = path.relative(bundle, file).split(path.sep).join('/');
+    return `${sha256(fs.readFileSync(file)).slice('sha256:'.length)}  ${relative}`;
+  });
+  fs.writeFileSync(path.join(bundle, 'SHA256SUMS'), `${sums.join('\n')}\n`);
+  console.log(`Generated metrics, report and checksums for ${path.basename(bundle)}`);
+}

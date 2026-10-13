@@ -1,0 +1,27 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-10-12-v0.1.0-functional-scenarios",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-10-12",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "0105c659d9fe7e85119c190910b2c53985f83374",
+    "manifest_sha256": "sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923"
+  },
+  "harness": {
+    "repository": "cogniumhq/a11y-validation",
+    "revision": "1a70bca62ddda4b65f06ba89df74b23369132675",
+    "pull_request": "https://github.com/cogniumhq/a11y-validation/pull/8"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "25d5253000df278f4a5fab5b690cee635a01e47a"
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}
