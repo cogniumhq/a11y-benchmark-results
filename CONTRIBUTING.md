@@ -4,6 +4,11 @@ Contributions are welcome from product vendors, auditors, researchers and
 community projects. Keep measurements separate from corpus truth and submit
 each new or corrected bundle through a pull request.
 
+Before adding a new product result, check [`tool-catalog.json`](tool-catalog.json).
+If the product is missing, add its official source, artifact scope, access
+model, engine lineage, metric family and execution route. Catalog representation
+does not authorize hosted uploads and does not count as an executed result.
+
 ## Required bundle
 
 Create `results/<local-date>-<corpus-version>-<scope>/` with:
