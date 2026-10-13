@@ -102,9 +102,102 @@ function validateToolSurfaceInventory(bundle, resultNames) {
   assert.equal(plan.privacy.credentials_allowed, false);
 }
 
+function validateToolCatalog() {
+  const catalog = readJson(path.join(process.cwd(), 'tool-catalog.json'));
+  assert.equal(catalog.format, 'cognium-a11y-tool-catalog');
+  assert.equal(catalog.format_version, '1.0.0');
+  assert.match(catalog.reviewed_on, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(catalog.entries.length >= 50, 'the systematic tool catalog unexpectedly shrank');
+
+  const categories = new Set([
+    'web-automated', 'browser-assisted', 'enterprise-platform', 'mobile-native',
+    'desktop-native', 'document', 'assistive-technology', 'specialized-signal',
+  ]);
+  const access = new Set(['open-source', 'free', 'commercial', 'built-in', 'mixed']);
+  const independence = new Set([
+    'independent-engine', 'derived-surface', 'wrapper', 'ensemble-wrapper',
+    'assistive-technology', 'inspection-tool', 'unknown-proprietary',
+  ]);
+  const maturity = new Set(['represented', 'executable', 'executed', 'verified']);
+  const priorities = new Set(['P0', 'P1', 'P2', 'P3']);
+  const ids = new Set();
+
+  for (const entry of catalog.entries) {
+    assert.match(entry.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `${entry.id} ID`);
+    assert.equal(ids.has(entry.id), false, `duplicate catalog ID: ${entry.id}`);
+    ids.add(entry.id);
+    assert.ok(categories.has(entry.category), `${entry.id} category`);
+    assert.ok(access.has(entry.access), `${entry.id} access`);
+    assert.ok(independence.has(entry.independence), `${entry.id} independence`);
+    assert.ok(maturity.has(entry.maturity), `${entry.id} maturity`);
+    assert.ok(priorities.has(entry.priority), `${entry.id} priority`);
+    for (const field of ['name', 'provider', 'surface', 'engine_family', 'metric_family', 'readiness']) {
+      assert.equal(typeof entry[field], 'string', `${entry.id} ${field}`);
+      assert.ok(entry[field].trim(), `${entry.id} ${field}`);
+    }
+    assert.ok(entry.artifact_scopes.length > 0, `${entry.id} artifact scopes`);
+    assert.match(entry.source, /^https:\/\//, `${entry.id} source`);
+    if (['derived-surface', 'wrapper', 'ensemble-wrapper'].includes(entry.independence)) {
+      assert.ok(entry.wrapper_of, `${entry.id} must declare wrapper_of`);
+    }
+    if (entry.maturity === 'executed' || entry.maturity === 'verified') {
+      assert.ok(entry.version, `${entry.id} executed entry must pin a version`);
+      assert.ok(entry.current_result, `${entry.id} executed entry must link evidence`);
+      const resultPath = path.resolve(process.cwd(), entry.current_result);
+      assert.ok(resultPath.startsWith(`${path.resolve(process.cwd(), 'results')}${path.sep}`),
+        `${entry.id} result path escapes the result directory`);
+      assert.ok(fs.existsSync(resultPath),
+        `${entry.id} result is missing`);
+    } else {
+      assert.equal('current_result' in entry, false,
+        `${entry.id} cannot link a result without execution evidence`);
+    }
+  }
+
+  const requiredResearchSet = [
+    'siteimprove-alfa', 'axe-core', 'level-access-continuum', 'ibm-equal-access',
+    'pa11y-html-codesniffer', 'nu-html-checker', 'qualweb', 'tenon-api',
+    'wave-testing-engine-api', 'testaro',
+  ];
+  const requiredInteroperabilitySet = [
+    'jaws', 'nvda', 'voiceover', 'talkback', 'narrator', 'zoomtext',
+    'apple-voice-control', 'android-voice-access', 'apple-switch-control',
+    'android-switch-access',
+  ];
+  const requiredNativeSet = [
+    'android-atf', 'android-accessibility-scanner', 'apple-accessibility-inspector',
+    'pac', 'adobe-acrobat-pro-accessibility-checker', 'commonlook-pdf-validator',
+    'microsoft-365-accessibility-checker', 'ace-by-daisy',
+  ];
+  for (const id of [...requiredResearchSet, ...requiredInteroperabilitySet, ...requiredNativeSet]) {
+    assert.ok(ids.has(id), `required catalog entry missing: ${id}`);
+  }
+
+  for (const bundle of bundleDirectories()) {
+    const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
+    for (const surface of inventory.surfaces) {
+      assert.ok(ids.has(surface.id), `published surface is missing from catalog: ${surface.id}`);
+      const entry = catalog.entries.find(({ id }) => id === surface.id);
+      const expected = surface.execution_status === 'executed' ? 'executed' : null;
+      if (expected) assert.equal(entry.maturity, expected, `${surface.id} catalog maturity`);
+    }
+  }
+
+  const markdown = fs.readFileSync(path.join(process.cwd(), 'TOOL_CATALOG.md'), 'utf8');
+  assert.match(markdown, new RegExp(`represents ${catalog.entries.length} product surfaces`));
+  assert.match(markdown, /A represented tool has inventory coverage only/i);
+  const catalogText = `${JSON.stringify(catalog)}\n${markdown}`;
+  assert.doesNotMatch(catalogText, /(?:\/Users\/|\/home\/|[A-Z]:\\Users\\)/);
+  assert.doesNotMatch(catalogText, /(?:marketplace=|pageUID=|set-cookie|authorization:|bearer\s+)/i);
+  assert.doesNotMatch(catalogText,
+    /(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})/);
+}
+
 const bundles = bundleDirectories();
 assert.ok(bundles.length > 0, 'no result bundles found');
 const bundleIds = new Set(bundles.map((bundle) => path.basename(bundle)));
+
+validateToolCatalog();
 
 for (const bundle of bundles) {
   const publication = readJson(path.join(bundle, 'publication.json'));

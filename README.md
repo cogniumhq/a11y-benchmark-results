@@ -8,6 +8,18 @@ ground truth. A listed result is format-validated evidence, not an endorsement,
 certification, legal opinion, accessibility score for every product, or a
 guarantee about production websites.
 
+## Comparison roadmap
+
+The generated [tool catalog](TOOL_CATALOG.md) tracks automated engines,
+browser-assisted products, enterprise platforms, native mobile and desktop
+checkers, document validators, specialized analyzers and assistive-technology
+pairings. Its machine-readable source is [`tool-catalog.json`](tool-catalog.json).
+
+Catalog inclusion means **represented**, not tested. Only immutable result
+bundles can move a product to `executed`, and only an independent reproduction
+can move it to `verified`. Engine wrappers and product surfaces retain their
+lineage and never inflate independent-engine agreement.
+
 ## Published bundles
 
 See the generated [public result index](INDEX.md). It distinguishes
