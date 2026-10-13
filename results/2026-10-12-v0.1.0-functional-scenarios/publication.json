@@ -19,7 +19,9 @@
   },
   "cognium_conformis": {
     "repository": "cogniumhq/conformis",
-    "revision": "25d5253000df278f4a5fab5b690cee635a01e47a"
+    "revision": "25d5253000df278f4a5fab5b690cee635a01e47a",
+    "latest_main_verified": "0a8e5278c2251838976da830a9ea34defad801d5",
+    "latest_main_difference": "artifact-only: packs/a11y-html/bench/iip-2026-10/bench-2026-10-13.json; no executable or dependency change"
   },
   "contact": {
     "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"

@@ -19,6 +19,11 @@ or local path is published.
   `sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923`
 - Cognium Conformis commit:
   `25d5253000df278f4a5fab5b690cee635a01e47a`
+- Latest `main` verified after the run:
+  `0a8e5278c2251838976da830a9ea34defad801d5`. The only change from the run
+  revision is the addition of
+  `packs/a11y-html/bench/iip-2026-10/bench-2026-10-13.json`; no executable or
+  dependency file changed.
 - Comparison harness commit:
   `1a70bca62ddda4b65f06ba89df74b23369132675`
 - Declared-flow file:
@@ -27,6 +32,11 @@ or local path is published.
 The automated lane contains 36 of the corpus's 234 cases. It has 18
 known-defect pages and 18 criterion-isolated corrected controls. The remaining
 198 cases and all eight human/assistive-technology protocols were not executed.
+
+The exact run remains pinned to `25d5253`. The post-run `main` verification
+shows that it is executable-code equivalent to the current upstream tip; this
+bundle does not rewrite the recorded run revision to a commit that was not
+actually executed.
 
 ## Commands
 

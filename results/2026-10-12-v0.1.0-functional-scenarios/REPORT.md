@@ -11,7 +11,8 @@ This is a single-run, finite-corpus detection comparison. It is not WCAG certifi
 - Corpus: `cogniumhq/a11y-benchmark@v0.1.0` (`0105c659d9fe7e85119c190910b2c53985f83374`).
 - Corpus manifest: `sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923`.
 - Comparison harness: `cogniumhq/a11y-validation@1a70bca62ddda4b65f06ba89df74b23369132675` ([review PR](https://github.com/cogniumhq/a11y-validation/pull/8)).
-- Cognium Conformis source: `cogniumhq/conformis@25d5253000df278f4a5fab5b690cee635a01e47a`.
+- Cognium Conformis run source: `cogniumhq/conformis@25d5253000df278f4a5fab5b690cee635a01e47a`.
+- Latest upstream `main` verified: `0a8e5278c2251838976da830a9ea34defad801d5`; artifact-only: packs/a11y-html/bench/iip-2026-10/bench-2026-10-13.json; no executable or dependency change.
 - Executed automated lane: 36/234 corpus cases (198 not executed).
 - Human and assistive-technology protocols executed: 0/8.
 
