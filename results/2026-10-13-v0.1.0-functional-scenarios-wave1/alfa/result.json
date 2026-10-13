@@ -1,0 +1,902 @@
+{
+  "format": "cognium-a11y-benchmark-result",
+  "format_version": "1.0.0",
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "revision": "0105c659d9fe7e85119c190910b2c53985f83374",
+    "manifest_sha256": "sha256:1f6e6c0cd962689937c5ca44f4450997ec12b15506e93f1b2e69cdce7835b923"
+  },
+  "run": {
+    "id": "2026-10-13-v0.1.0-functional-scenarios-wave1-alfa",
+    "started_at": "2026-10-13T16:16:14.244Z",
+    "completed_at": "2026-10-13T16:16:56.752Z",
+    "repeat": 1,
+    "tool": {
+      "name": "Siteimprove Alfa",
+      "version": "rules 0.119.0; Puppeteer integration 0.84.2",
+      "engine_family": "Alfa ACT rules",
+      "tool_surface": "Puppeteer page API",
+      "independence": "independent-engine"
+    },
+    "environment": {
+      "os": "darwin/arm64",
+      "runtime": "Node.js v25.9.0",
+      "browser": "Chromium",
+      "browser_version": "149.0.7827.55",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    "privacy": {
+      "fixture_data": "public-synthetic",
+      "raw_evidence_published": false
+    }
+  },
+  "executions": [
+    {
+      "case_id": "static-img_no_alt",
+      "case_path": "static/img_no_alt.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "1.1.1",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r2",
+          "verdict": "fail",
+          "findings": 3,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:db5c3b8a23053b87db4037bf1b803e11c26356f4ac90276bb8baf6b05ed8b2ab",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_img",
+      "case_path": "static/safe_img.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.1.1",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:16cbece2075998a6edebb0611620bd77b93b3b85df4567343dccd7961c24bacb",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-input_purpose_missing",
+      "case_path": "static/input_purpose_missing.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.3.5",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:94c58956709f14f18d8dc7566348e1d5006a20ee5114d61d25f1e180ae9a7ead",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_input_purpose",
+      "case_path": "static/safe_input_purpose.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.3.5",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:bb58bc3ab9d1ce59378a79213c46982ee327d8bb806d6248ddb7e2ce5e19d5d1",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-text_low_contrast",
+      "case_path": "static/text_low_contrast.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "1.4.3",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r69",
+          "verdict": "fail",
+          "findings": 1,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:657b4c0a57311234e19918898e1e564b9da08799136084e69900d1097e962c17",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_text_contrast",
+      "case_path": "static/safe_text_contrast.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.4.3",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:d25a6127c6b0dd39ba662110e81fd5e2379e74d961e61058c03c67ca8409d991",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-viewport_no_zoom",
+      "case_path": "static/viewport_no_zoom.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "1.4.4",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r47",
+          "verdict": "fail",
+          "findings": 1,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:c578df5eb1ea31ec07f212d778c87b3dcb2f1ae212e24831dd7efbe54b25675a",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_viewport",
+      "case_path": "static/safe_viewport.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.4.4",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:0cb3cacf1835c57d872fa32b01726e3a167dbc249af87e6fd086a2db5ae05774",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-page_title_missing",
+      "case_path": "static/page_title_missing.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "2.4.2",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r1",
+          "verdict": "fail",
+          "findings": 1,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:d839c91ca666945384361ef7d40f5830f28be14deab6d4275f3e7b89a81893a3",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_page_title",
+      "case_path": "static/safe_page_title.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:74baf7b432389ecb9ba0f4af9951130ca4bdaebd2a9b6ed1748d07d01d737195",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-ambiguous_link_purpose",
+      "case_path": "static/ambiguous_link_purpose.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.4",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:744f37c6801bee64294d25f1b79574a8b58d23494e2838f7c39069529b6e23c7",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_link_purpose",
+      "case_path": "static/safe_link_purpose.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.4",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:9e071435487c53c231fb09e76cd459dff4c7265407ebf0c78c6de76795633b87",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-vague_heading_and_label",
+      "case_path": "static/vague_heading_and_label.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.6",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:bf9a96fdd54f0876af5be92e2dfa1639b6b7126972c42b2e21ff3c955862c198",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_descriptive_heading_and_label",
+      "case_path": "static/safe_descriptive_heading_and_label.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.6",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:eec66c7eaf626abb7e88ed621fdaaba463393a301ff24de658d111054892ee27",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "keyboard-focus_not_visible",
+      "case_path": "keyboard/focus_not_visible.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.7",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:6b64e9b42fa2933cad1d9de3426bed063f8988dbba83ea9c9a7cb9cbdfb039af",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "keyboard-safe_focus_visible",
+      "case_path": "keyboard/safe_focus_visible.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.7",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:9537d9831571c4f749b632eae73aa0dfe0de01d6365ef3cd13c3eb62a54d01d5",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "keyboard-focus_obscured",
+      "case_path": "keyboard/focus_obscured.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.11",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:67555580a50e89d8e4abb771132ae9bdbc97c3e6c27b55cbb4c406c10d890bed",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "keyboard-safe_focus_not_obscured",
+      "case_path": "keyboard/safe_focus_not_obscured.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.4.11",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:21ca55b7e4385271ba8a6039b22369bcf724f14709d5e1b1f5e53608246dec6f",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-keyboard_trap",
+      "case_path": "scenarios/keyboard_trap.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.1.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:d401576a7ed04ffb4bcc88ac543e4f48ee54c5680437de211474152b5d375087",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_keyboard_trap",
+      "case_path": "scenarios/safe_keyboard_trap.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.1.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:84432b6a69eb97e6ec44ba250f33dcf915a65ac4b7310dd87c4887ede5e2a3fd",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-meaningful_sequence",
+      "case_path": "scenarios/meaningful_sequence.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.3.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:dbc6ee7c2d9c5cc80a62a08e0e3efb26eabbde2f16e4a96549be03cadae24682",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_meaningful_sequence",
+      "case_path": "scenarios/safe_meaningful_sequence.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.3.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:4b55944504f7a6c794bd6e1dd6cea5b81561598a5cd403c4d70654f44fd21c85",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-text_spacing",
+      "case_path": "scenarios/text_spacing.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.4.12",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:efa6450a024ddd77cfd075537068f535b743f1fc6de28e50923e505222aef020",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_text_spacing",
+      "case_path": "scenarios/safe_text_spacing.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "1.4.12",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:efdce0af921853708b8667bc95718da17277f3b26d04fcc099aa80f2e526fcff",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-rtl_mixed_language",
+      "case_path": "scenarios/rtl_mixed_language.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.1.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:76e1578c4894fdd4838d84af0ec7c83da37ffb75b50b47ad19e36cb556488d7d",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_rtl_mixed_language",
+      "case_path": "scenarios/safe_rtl_mixed_language.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.1.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:4f9b2da8cccc2c668342692cb91a0da06b1d97c0c794ac871afdc91c12426221",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-label_in_name",
+      "case_path": "scenarios/label_in_name.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "2.5.3",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r14",
+          "verdict": "fail",
+          "findings": 1,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:27756ab9382c0bcacd171cf1c4c5b62d13c76d042ba0681d65e3aea6db2ce07a",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_label_in_name",
+      "case_path": "scenarios/safe_label_in_name.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.5.3",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:2aa4bee27a64c500b3f36255433cd8ec87473a80b88dcc79b272375de295a565",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-pointer_cancellation",
+      "case_path": "scenarios/pointer_cancellation.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.5.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:d42027d5a5b614ec57e607151d6890836e1f3030be9aa81641936fdb5a80a398",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_pointer_cancellation",
+      "case_path": "scenarios/safe_pointer_cancellation.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "2.5.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:2e9d8f0b6fcf601c8012ecb9df48f892c154598ecc2ecdf7fe410ed6f8e8ea12",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-error_suggestion",
+      "case_path": "scenarios/error_suggestion.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.3.3",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:54bf041bdb94dbeb49754886c0a8424ea5561dad0194c746c4b7352f270d2400",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "scenario-safe_error_suggestion",
+      "case_path": "scenarios/safe_error_suggestion.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.3.3",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:a268d0936f00cd362a6d9a4e8089d5fdcae76bf17aa91cd72abc1a55bba6ca85",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-field_no_visible_label",
+      "case_path": "static/field_no_visible_label.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.3.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:8b4a3c9ae36f97b0b6c6fcd26161d248a7351194fefa36ce04775213d90ef9c7",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_field_visible_label",
+      "case_path": "static/safe_field_visible_label.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.3.2",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:8a21a4676d9f1c7649d82655e217401957f98a0bc19371a3dcc75ab3b0d2483d",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-lang_missing",
+      "case_path": "static/lang_missing.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "observed",
+      "outcomes": [
+        {
+          "criterion": "3.1.1",
+          "native_rule_id": "https://alfa.siteimprove.com/rules/sia-r4",
+          "verdict": "fail",
+          "findings": 1,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:6815a43d0b73cfe96a54b91f3d4b0dddb765a65a858269306d32f833c02ea66d",
+              "note": "SHA-256 digest of the native per-case output used for this mapped finding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "static-safe_lang_declared",
+      "case_path": "static/safe_lang_declared.html",
+      "status": "completed",
+      "declared_state": "default page load",
+      "state_reached": true,
+      "target_observability": "unknown",
+      "outcomes": [
+        {
+          "criterion": "3.1.1",
+          "native_rule_id": "no-mapped-native-rule",
+          "verdict": "cannot-tell",
+          "findings": 0,
+          "examined_count": null,
+          "evidence": [
+            {
+              "type": "digest",
+              "digest": "sha256:096b7b3f592408cb76c85328b672ec33ae0e53a538ef468c47cd4f30f30db2e2",
+              "note": "No finding mapped to this declared criterion; cannot-tell is preserved instead of claiming pass."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

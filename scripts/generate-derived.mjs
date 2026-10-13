@@ -24,10 +24,18 @@ function renderReport(bundle, metrics) {
   const publication = readJson(path.join(bundle, 'publication.json'));
   const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
   const results = resultFiles(bundle).map(readJson);
-  const resultByName = new Map(results.map((result) => [result.run.tool.name, result]));
   const toolIds = comparison.tool_order;
+  const criterionToolIds = toolIds.filter((id) =>
+    metrics.tools[id].metric_family !== 'specialized markup signal');
+  const specialistToolIds = toolIds.filter((id) =>
+    metrics.tools[id].metric_family === 'specialized markup signal');
   const toolNames = toolIds.map((id) => metrics.tools[id].name);
   const commonMisses = metrics.union.common_misses.map((id) => `\`${id}\``).join(', ');
+  const unionLabel = criterionToolIds.length === 5
+    ? 'five-product'
+    : `${criterionToolIds.length}-product criterion-mapped`;
+  const competitorCount = toolIds.length - 1;
+  const competitorLabel = competitorCount === 4 ? 'four' : competitorCount;
   const lines = [
     '# Accessibility benchmark comparison: v0.1.0 functional scenarios',
     '',
@@ -53,12 +61,25 @@ function renderReport(bundle, metrics) {
     '',
     '| Tool | Known-defect criteria detected | Corrected controls target-clean | Completed | Errors |',
     '|---|---:|---:|---:|---:|',
-    ...toolIds.map((id) => {
+    ...criterionToolIds.map((id) => {
       const item = metrics.tools[id];
       return `| ${item.name} | ${item.expected_criteria_matched}/${item.expected_criteria} (${pct(item.expected_criteria_matched, item.expected_criteria)}) | ${item.controls_target_clean}/${item.control_cases} | ${item.completed}/${item.cases} | ${item.errors} |`;
     }),
     '',
-    `The five-product union detected the declared target criterion on ${metrics.union.defect_cases_target_detected}/${metrics.union.defect_cases} known-defect cases (${pct(metrics.union.defect_cases_target_detected, metrics.union.defect_cases)}). “Target-clean” means only that a tool did not report the corrected control's declared criterion; it does not establish conformance or a pass.`,
+    `The ${unionLabel} union detected the declared target criterion on ${metrics.union.defect_cases_target_detected}/${metrics.union.defect_cases} known-defect cases (${pct(metrics.union.defect_cases_target_detected, metrics.union.defect_cases)}). “Target-clean” means only that a tool did not report the corrected control's declared criterion; it does not establish conformance or a pass.`,
+    ...(specialistToolIds.length ? [
+      '',
+      '## Specialized signal lane',
+      '',
+      '| Tool | Metric family | Pages with findings | Native findings | Completed | Errors |',
+      '|---|---|---:|---:|---:|---:|',
+      ...specialistToolIds.map((id) => {
+        const item = metrics.tools[id];
+        return `| ${item.name} | ${item.metric_family} | ${item.signal_pages_with_findings}/${item.cases} | ${item.signal_findings} | ${item.completed}/${item.cases} | ${item.errors} |`;
+      }),
+      '',
+      'Specialized signals are not WCAG criterion-recall results and do not contribute to the criterion-mapped union. They are published to compare the tool’s actual signal family without inventing WCAG mappings.',
+    ] : []),
     '',
     '## Tool lineage',
     '',
@@ -96,7 +117,7 @@ function renderReport(bundle, metrics) {
       return `| ${run.tool.name} | ${environment.os} | ${environment.runtime} | ${environment.browser} ${environment.browser_version} | ${environment.viewport.width}×${environment.viewport.height} | ${run.started_at} – ${run.completed_at} |`;
     }),
     '',
-    'Cognium Conformis ran in Linux/arm64 while the four directly executed competitor adapters ran in macOS/arm64, and the Chromium patch versions differ. The corpus, viewport and criterion mapping were pinned, but this is not a perfectly environment-controlled head-to-head trial. Treat the counts as a reproducible product snapshot, not a claim that OS and browser-build effects are zero.',
+    `Cognium Conformis ran in Linux/arm64 while the ${competitorLabel} directly executed competitor adapters ran in macOS/arm64, and the Chromium patch versions differ. The corpus, viewport and criterion mapping were pinned, but this is not a perfectly environment-controlled head-to-head trial. Treat the counts as a reproducible product snapshot, not a claim that OS and browser-build effects are zero.`,
     '',
     '## Case matrix',
     '',
