@@ -348,6 +348,36 @@ Three corrected-control-clean Conformis gaps were logged before publication: [#2
 
 An Alfa-only WCAG 2.5.5 signal was not treated as a Conformis defect because Alfa also reports that criterion on the corrected control. Conformis reports WCAG 2.5.8 on the defect and leaves that corrected control target-clean.
 
+## Defect and backlog ledger
+
+A missed target is not automatically a product defect. The benchmark routes findings to the product, corpus, state driver, validation harness or adjudication owner according to the evidence. The 60 shared misses above are therefore covered by consolidated issues rather than 60 duplicate tickets.
+
+### Open actionable work
+
+| Owner | Issue | Evidence routed there |
+|---|---|---|
+| Cognium Conformis | [#288](https://github.com/cogniumhq/conformis/issues/288) | Visible-label association mapping |
+| Cognium Conformis | [#289](https://github.com/cogniumhq/conformis/issues/289) | Draggable custom slider keyboard and role coverage |
+| Cognium Conformis | [#290](https://github.com/cogniumhq/conformis/issues/290) | Bare SVG chart alternative coverage |
+| Cognium Conformis | [#307](https://github.com/cogniumhq/conformis/issues/307) | Four flashing-content cases; five target assertions |
+| Cognium Conformis | [#308](https://github.com/cogniumhq/conformis/issues/308) | Five media-equivalence cases; six target assertions |
+| Cognium Conformis | [#271](https://github.com/cogniumhq/conformis/issues/271) | Broader missing-control coverage, including machine-decidable criteria |
+| a11y-benchmark corpus | [#44](https://github.com/cogniumhq/a11y-benchmark/issues/44) | 38 fixtures not served by the corpus server |
+| a11y-benchmark corpus | [#46](https://github.com/cogniumhq/a11y-benchmark/issues/46) | Declarative drivers for 38 non-default-state cases |
+| a11y-benchmark corpus | [#47](https://github.com/cogniumhq/a11y-benchmark/issues/47) | Adjudication of 13 static-parse assertions missed by six engines |
+| a11y-benchmark corpus | [#48](https://github.com/cogniumhq/a11y-benchmark/issues/48) | Twenty-three pairs with possible undeclared confounds |
+| a11y-validation harness | [#12](https://github.com/cogniumhq/a11y-validation/issues/12) | Three adapters treated HTTP error pages as benchmark evidence |
+
+### Resolved or investigated findings
+
+| Owner | Issues | Outcome |
+|---|---|---|
+| a11y-benchmark corpus | [#37](https://github.com/cogniumhq/a11y-benchmark/issues/37), [#38](https://github.com/cogniumhq/a11y-benchmark/issues/38), [#39](https://github.com/cogniumhq/a11y-benchmark/issues/39) | Corrected-control scoring, AAA pooling and evidence-ledger defects were resolved before this publication. |
+| Cognium Conformis | [#283](https://github.com/cogniumhq/conformis/issues/283), [#284](https://github.com/cogniumhq/conformis/issues/284) | Benchmark-discovered keyboard-trap false positives were fixed and closed. |
+| Cognium Conformis | [#295](https://github.com/cogniumhq/conformis/issues/295) | A later 1.3.0 record-count anomaly was logged, did not change benchmark detection counts, was not reproduced in isolated reruns and was closed. |
+
+Issue status was reconciled on 2026-10-14. Links are authoritative if status changes after this report revision.
+
 ## Evidence and interpretation limits
 
 - Every product has one repetition; this bundle does not estimate run-to-run variance.

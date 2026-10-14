@@ -52,6 +52,11 @@ the expanded entry-page lane. The core's 9/18 (50%) and the expanded lane's
 release comparisons must keep the corpus, target assertions, state/flow
 contract, tool configuration and scoring rules fixed.
 
+The latest report also contains a cross-repository defect ledger. It separates
+confirmed product gaps from corpus, scenario-driver, validation-harness and
+ground-truth-adjudication work, and retains resolved benchmark findings for
+traceability.
+
 ## Validate
 
 ```sh
