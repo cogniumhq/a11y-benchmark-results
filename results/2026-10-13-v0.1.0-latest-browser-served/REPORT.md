@@ -18,7 +18,31 @@ This is a single-run, finite-corpus detection comparison. It is not WCAG certifi
 
 The unexecuted cases and protocols are neither passes nor failures. JAWS, NVDA, VoiceOver, TalkBack, keyboard, switch, voice, media-equivalence, display-adaptation, comprehension and user-task work remains in separate lanes.
 
-## Results
+## Executive interpretation
+
+In the expanded entry-page lane, Cognium Conformis detected 71/189 declared target assertions (38%), reached 47/110 known-defect pages (43%), and left 104/104 corrected controls target-clean. It detected 13 target assertions that no other criterion-mapped configuration detected in this run.
+
+| What this number answers | Result | Interpretation |
+|---|---:|---|
+| Expanded target-assertion recall | 71/189 (38%) | Broad entry-page coverage across multi-criterion fixtures |
+| Known-defect page reach | 47/110 (43%) | Pages with at least one declared criterion detected |
+| Corrected-control guardrail | 104/104 | No corrected control was reported for its declared target criterion |
+| Distinct WCAG criteria detected | 17/54 | Breadth across the declared criterion set |
+| Conformis-only target assertions | 13 | Incremental detection beyond the other measured configurations |
+| Dynamic-state execution | 0 declared flows | This run measured loaded entry pages, not interaction-state coverage |
+
+### Scope change, not a trend line
+
+| Published lane | State model | Defect pages | Target assertions | Cognium Conformis |
+|---|---|---:|---:|---:|
+| Prior functional core | Subject-declared page and flow states | 18 | 18 | 9/18 (50%) |
+| Expanded browser-served | Loaded entry pages; zero declared flows | 110 | 189 | 71/189 (38%) |
+
+The prior 50% result and the expanded 38% result are not a before/after product comparison. The core lane was criterion-isolated and included declared page or flow states; the expanded lane is much broader and declared no flows. Projecting the expanded entry-page evidence onto the prior core IDs yields 8/18, but that diagnostic is not a release-regression score: the WCAG 2.4.11 focus-obscured state was not exercised, although another focus finding was present on that page.
+
+Future release reporting should keep three independent trend lines: a pinned flow-enabled core regression lane, this expanded entry-page lane, and a human/assistive-technology lane. Do not average them into one score.
+
+## Expanded entry-page lane results
 
 | Tool | Known-defect criteria detected | Corrected controls target-clean | Completed | Errors |
 |---|---:|---:|---:|---:|
@@ -34,7 +58,7 @@ The 7-product criterion-mapped union detected the declared target criterion on 5
 
 Across multi-criterion cases, the product union detected 75/189 target assertions and 18/54 distinct WCAG criteria. The detected-criteria count happens to be 18; unlike the earlier fixed 18-scenario denominator, it is computed from this run's mapped findings against a 54-criterion denominator.
 
-Cognium Conformis led this lane with 71/189 target assertions, 47/110 defect pages and 17/54 distinct criteria while all 104 corrected controls remained target-clean. QualWeb was next on assertion count at 59/189, with two corrected-control target findings. This finite-corpus result does not establish conformance or a universal ranking.
+Cognium Conformis had the highest target-assertion count in this lane with 71/189; QualWeb was next at 59/189. This finite-corpus result does not establish conformance, a universal ranking or a product trend.
 
 ## Specialized signal lane
 

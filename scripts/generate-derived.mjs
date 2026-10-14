@@ -51,6 +51,37 @@ function renderReport(bundle, metrics) {
   }
   const expectedDistinctCriteria = new Set(expectedAssertions.map((item) => item.split('\0')[1]));
   const detectedDistinctCriteria = new Set([...assertionUnion].map((item) => item.split('\0')[1]));
+  const cogniumAssertionSet = new Set(
+    comparison.tools.cognium.cases
+      .filter(({ mode }) => mode === 'tp')
+      .flatMap((row) => row.matched_expected_criteria.map((criterion) => `${row.id}\0${criterion}`)),
+  );
+  const otherToolAssertionSet = new Set(
+    criterionToolIds
+      .filter((id) => id !== 'cognium')
+      .flatMap((id) => comparison.tools[id].cases
+        .filter(({ mode }) => mode === 'tp')
+        .flatMap((row) => row.matched_expected_criteria.map((criterion) => `${row.id}\0${criterion}`))),
+  );
+  const cogniumUniqueAssertions = [...cogniumAssertionSet]
+    .filter((assertion) => !otherToolAssertionSet.has(assertion)).length;
+  const cogniumDistinctCriteria = new Set(
+    [...cogniumAssertionSet].map((item) => item.split('\0')[1]),
+  );
+  const priorCoreBundle = latestBrowserServed
+    ? path.join(ROOT, 'results/2026-10-13-v0.1.0-functional-scenarios-wave1')
+    : null;
+  const priorCoreMetrics = priorCoreBundle ? calculateMetrics(priorCoreBundle) : null;
+  const priorCoreComparison = priorCoreBundle
+    ? readJson(path.join(priorCoreBundle, 'comparison.json'))
+    : null;
+  const priorCoreDefectIds = new Set(
+    priorCoreComparison?.cases.filter(({ mode }) => mode === 'tp').map(({ id }) => id) ?? [],
+  );
+  const expandedCoreProjection = comparison.tools.cognium.cases
+    .filter(({ mode, id }) => mode === 'tp' && priorCoreDefectIds.has(id))
+    .reduce((total, row) => total + row.matched_expected_criteria.length, 0);
+  const cogniumMetrics = metrics.tools.cognium;
   const lines = [
     latestBrowserServed
       ? '# Accessibility benchmark comparison: latest browser-served corpus'
@@ -74,7 +105,33 @@ function renderReport(bundle, metrics) {
     '',
     'The unexecuted cases and protocols are neither passes nor failures. JAWS, NVDA, VoiceOver, TalkBack, keyboard, switch, voice, media-equivalence, display-adaptation, comprehension and user-task work remains in separate lanes.',
     '',
-    '## Results',
+    ...(latestBrowserServed ? [
+      '## Executive interpretation',
+      '',
+      `In the expanded entry-page lane, Cognium Conformis detected ${cogniumMetrics.expected_criteria_matched}/${cogniumMetrics.expected_criteria} declared target assertions (${pct(cogniumMetrics.expected_criteria_matched, cogniumMetrics.expected_criteria)}), reached ${cogniumMetrics.defect_cases_target_detected}/${cogniumMetrics.defect_cases} known-defect pages (${pct(cogniumMetrics.defect_cases_target_detected, cogniumMetrics.defect_cases)}), and left ${cogniumMetrics.controls_target_clean}/${cogniumMetrics.control_cases} corrected controls target-clean. It detected ${cogniumUniqueAssertions} target assertions that no other criterion-mapped configuration detected in this run.`,
+      '',
+      '| What this number answers | Result | Interpretation |',
+      '|---|---:|---|',
+      `| Expanded target-assertion recall | ${cogniumMetrics.expected_criteria_matched}/${cogniumMetrics.expected_criteria} (${pct(cogniumMetrics.expected_criteria_matched, cogniumMetrics.expected_criteria)}) | Broad entry-page coverage across multi-criterion fixtures |`,
+      `| Known-defect page reach | ${cogniumMetrics.defect_cases_target_detected}/${cogniumMetrics.defect_cases} (${pct(cogniumMetrics.defect_cases_target_detected, cogniumMetrics.defect_cases)}) | Pages with at least one declared criterion detected |`,
+      `| Corrected-control guardrail | ${cogniumMetrics.controls_target_clean}/${cogniumMetrics.control_cases} | No corrected control was reported for its declared target criterion |`,
+      `| Distinct WCAG criteria detected | ${cogniumDistinctCriteria.size}/${expectedDistinctCriteria.size} | Breadth across the declared criterion set |`,
+      `| Conformis-only target assertions | ${cogniumUniqueAssertions} | Incremental detection beyond the other measured configurations |`,
+      '| Dynamic-state execution | 0 declared flows | This run measured loaded entry pages, not interaction-state coverage |',
+      '',
+      '### Scope change, not a trend line',
+      '',
+      '| Published lane | State model | Defect pages | Target assertions | Cognium Conformis |',
+      '|---|---|---:|---:|---:|',
+      `| Prior functional core | Subject-declared page and flow states | ${priorCoreMetrics.tools.cognium.defect_cases} | ${priorCoreMetrics.tools.cognium.expected_criteria} | ${priorCoreMetrics.tools.cognium.expected_criteria_matched}/${priorCoreMetrics.tools.cognium.expected_criteria} (${pct(priorCoreMetrics.tools.cognium.expected_criteria_matched, priorCoreMetrics.tools.cognium.expected_criteria)}) |`,
+      `| Expanded browser-served | Loaded entry pages; zero declared flows | ${cogniumMetrics.defect_cases} | ${cogniumMetrics.expected_criteria} | ${cogniumMetrics.expected_criteria_matched}/${cogniumMetrics.expected_criteria} (${pct(cogniumMetrics.expected_criteria_matched, cogniumMetrics.expected_criteria)}) |`,
+      '',
+      `The prior 50% result and the expanded ${pct(cogniumMetrics.expected_criteria_matched, cogniumMetrics.expected_criteria)} result are not a before/after product comparison. The core lane was criterion-isolated and included declared page or flow states; the expanded lane is much broader and declared no flows. Projecting the expanded entry-page evidence onto the prior core IDs yields ${expandedCoreProjection}/${priorCoreMetrics.tools.cognium.expected_criteria}, but that diagnostic is not a release-regression score: the WCAG 2.4.11 focus-obscured state was not exercised, although another focus finding was present on that page.`,
+      '',
+      'Future release reporting should keep three independent trend lines: a pinned flow-enabled core regression lane, this expanded entry-page lane, and a human/assistive-technology lane. Do not average them into one score.',
+      '',
+      '## Expanded entry-page lane results',
+    ] : ['## Results']),
     '',
     '| Tool | Known-defect criteria detected | Corrected controls target-clean | Completed | Errors |',
     '|---|---:|---:|---:|---:|',
@@ -88,7 +145,7 @@ function renderReport(bundle, metrics) {
       '',
       `Across multi-criterion cases, the product union detected ${assertionUnion.size}/${expectedAssertions.length} target assertions and ${detectedDistinctCriteria.size}/${expectedDistinctCriteria.size} distinct WCAG criteria. The detected-criteria count happens to be 18; unlike the earlier fixed 18-scenario denominator, it is computed from this run's mapped findings against a 54-criterion denominator.`,
       '',
-      'Cognium Conformis led this lane with 71/189 target assertions, 47/110 defect pages and 17/54 distinct criteria while all 104 corrected controls remained target-clean. QualWeb was next on assertion count at 59/189, with two corrected-control target findings. This finite-corpus result does not establish conformance or a universal ranking.',
+      `Cognium Conformis had the highest target-assertion count in this lane with ${cogniumMetrics.expected_criteria_matched}/${cogniumMetrics.expected_criteria}; QualWeb was next at ${metrics.tools.qualweb.expected_criteria_matched}/${metrics.tools.qualweb.expected_criteria}. This finite-corpus result does not establish conformance, a universal ranking or a product trend.`,
     ] : []),
     ...(specialistToolIds.length ? [
       '',

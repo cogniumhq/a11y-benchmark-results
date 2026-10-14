@@ -89,6 +89,33 @@ control target findings. The product union detects 75/189 assertions on 50/110
 defect pages and 18/54 distinct criteria. The union's 18 is a measured result,
 not the earlier fixed 18-scenario denominator.
 
+## Comparability and trend policy
+
+This expanded result is not a regression comparison with the earlier functional
+core result. The two published lanes answer different questions:
+
+| Lane | State model | Defect pages | Target assertions | Conformis result |
+|---|---|---:|---:|---:|
+| Functional core | Subject-declared page and flow states | 18 | 18 | 9/18 (50%) |
+| Expanded browser-served | Loaded entry pages; zero declared flows | 110 | 189 | 71/189 (38%) |
+
+The earlier lane is criterion-isolated and includes declared flow states. This
+expanded lane evaluates a broader, multi-criterion corpus at its loaded entry
+state. Restricting the expanded evidence to the earlier core IDs produces 8/18,
+but that is a diagnostic projection, not a release-regression score: the WCAG
+2.4.11 focus-obscured state was not exercised in the zero-flow subject, although
+another focus finding was present on that page.
+
+Future releases should publish three independent trend lines rather than one
+blended score:
+
+1. A pinned, flow-enabled functional core for release-over-release regression.
+2. An expanded entry-page lane for broad automated coverage.
+3. A human and assistive-technology lane for tasks automation cannot establish.
+
+Any trend claim must hold the corpus revision, expected assertions, state/flow
+contract, tool configuration and scoring rules constant.
+
 Three corrected-control-clean Conformis gaps were logged before publication:
 
 - <https://github.com/cogniumhq/conformis/issues/288>
