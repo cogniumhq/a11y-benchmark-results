@@ -1,0 +1,205 @@
+{
+  "format": "cognium-a11y-tool-surface-inventory",
+  "format_version": "1.0.0",
+  "observed_on": "2026-10-13",
+  "surfaces": [
+    {
+      "id": "cognium-conformis",
+      "name": "Cognium Conformis",
+      "vendor": "Cognium",
+      "version": "git:28f9e14db3a095f3d5983a947f233c99772a2b25; a11y/html@1.2.1 + tech/html-aria@1.2.1",
+      "surface_type": "site-scanner",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "cognium-conformis/result.json",
+      "lineage": {
+        "engine_family": "Conformis a11y/html and tech/html-aria",
+        "engine_version": "a11y/html@1.2.1 + tech/html-aria@1.2.1",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured as the Cognium Conformis site-scanner configuration over all declared entry pages; this subject declared zero flows.",
+      "sources": ["https://github.com/cogniumhq/conformis"]
+    },
+    {
+      "id": "axe-core",
+      "name": "axe-core",
+      "vendor": "Deque Systems",
+      "version": "4.14.0",
+      "surface_type": "automation-engine",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "axe/result.json",
+      "lineage": {
+        "engine_family": "axe-core",
+        "engine_version": "4.14.0",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured directly through Playwright page injection and counted once as the axe-core engine result.",
+      "sources": ["https://github.com/dequelabs/axe-core"]
+    },
+    {
+      "id": "axe-devtools-browser-extension",
+      "name": "axe DevTools - Web Accessibility Testing",
+      "vendor": "Deque Systems",
+      "version": "4.138.0",
+      "surface_type": "browser-extension",
+      "measurement_lane": "automated-and-guided",
+      "execution_status": "not-executed",
+      "included_in_automated_metrics": false,
+      "lineage": {
+        "engine_family": "axe-core",
+        "engine_version": null,
+        "independence": "derived-surface",
+        "wrapper_of": "axe-core"
+      },
+      "metric_treatment": "Inventoried but not counted as a second independent engine vote; a future extension run must pin the edition, enabled features and embedded engine version.",
+      "sources": [
+        "https://chromewebstore.google.com/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd",
+        "https://www.deque.com/axe/devtools/extension/"
+      ]
+    },
+    {
+      "id": "pa11y-html-codesniffer",
+      "name": "Pa11y / HTML_CodeSniffer",
+      "vendor": "Pa11y contributors",
+      "version": "10.0.0",
+      "surface_type": "automation-runner",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "pa11y-htmlcs/result.json",
+      "lineage": {
+        "engine_family": "HTML_CodeSniffer",
+        "engine_version": "2.6.0",
+        "independence": "wrapper",
+        "wrapper_of": "HTML_CodeSniffer"
+      },
+      "metric_treatment": "Measured through Pa11y's HTML_CodeSniffer runner; the optional axe runner was excluded to avoid duplicate axe measurements.",
+      "sources": ["https://github.com/pa11y/pa11y"]
+    },
+    {
+      "id": "ibm-equal-access",
+      "name": "IBM Equal Access",
+      "vendor": "IBM",
+      "version": "4.0.34",
+      "surface_type": "automation-engine",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "ibm/result.json",
+      "lineage": {
+        "engine_family": "IBM Equal Access Accessibility Checker",
+        "engine_version": "4.0.34",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured directly with the WCAG 2.2 policy.",
+      "sources": ["https://github.com/IBMa/equal-access"]
+    },
+    {
+      "id": "lighthouse-accessibility",
+      "name": "Lighthouse accessibility",
+      "vendor": "Google",
+      "version": "13.5.0",
+      "surface_type": "browser-audit",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "lighthouse/result.json",
+      "lineage": {
+        "engine_family": "axe-core-derived Lighthouse audits",
+        "engine_version": "4.14.0",
+        "independence": "derived-configuration",
+        "wrapper_of": "axe-core"
+      },
+      "metric_treatment": "Measured as a product configuration but excluded from claims about independent engine agreement.",
+      "sources": ["https://github.com/GoogleChrome/lighthouse"]
+    },
+    {
+      "id": "siteimprove-alfa",
+      "name": "Siteimprove Alfa",
+      "vendor": "Siteimprove",
+      "version": "rules 0.119.0; Puppeteer integration 0.84.2",
+      "surface_type": "automation-engine",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "alfa/result.json",
+      "lineage": {
+        "engine_family": "Alfa ACT rules",
+        "engine_version": "rules 0.119.0; Puppeteer integration 0.84.2",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured through Alfa's stable ACT-rule set against each Puppeteer page snapshot.",
+      "sources": ["https://github.com/Siteimprove/alfa"]
+    },
+    {
+      "id": "qualweb",
+      "name": "QualWeb",
+      "vendor": "University of Lisbon / QualWeb contributors",
+      "version": "core 0.9.5; ACT rules 0.8.6; WCAG techniques 0.4.9; best practices 0.7.13",
+      "surface_type": "automation-engine",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "qualweb/result.json",
+      "lineage": {
+        "engine_family": "QualWeb ACT rules, WCAG techniques and best practices",
+        "engine_version": "core 0.9.5; ACT rules 0.8.6; WCAG techniques 0.4.9; best practices 0.7.13",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured with the ACT rules, WCAG techniques and best-practice modules enabled.",
+      "sources": ["https://github.com/qualweb/qualweb"]
+    },
+    {
+      "id": "nu-html-checker",
+      "name": "Nu Html Checker",
+      "vendor": "Validator contributors",
+      "version": "26.10.12 (0a70d65); image sha256:8f21030474e68e06905cfa801b37376e99c0e37867c653c5b6cd7e2dcaf3f503",
+      "surface_type": "conformance-checker",
+      "measurement_lane": "automated",
+      "execution_status": "executed",
+      "included_in_automated_metrics": true,
+      "result_path": "nu-html-checker/result.json",
+      "lineage": {
+        "engine_family": "v.Nu HTML, CSS and SVG conformance checker",
+        "engine_version": "26.10.12 (0a70d65)",
+        "independence": "independent-engine",
+        "wrapper_of": null
+      },
+      "metric_treatment": "Measured as a specialized markup signal. Native error counts are reported separately and excluded from WCAG criterion recall and its union.",
+      "sources": ["https://github.com/validator/validator"]
+    },
+    {
+      "id": "accessibility-insights-for-web",
+      "name": "Accessibility Insights for Web",
+      "vendor": "Microsoft",
+      "version": "2.49.0",
+      "surface_type": "browser-extension",
+      "measurement_lane": "automated-assisted-and-manual",
+      "execution_status": "not-executed",
+      "included_in_automated_metrics": false,
+      "protocol_path": "manual/accessibility-insights-for-web/PROTOCOL.md",
+      "run_plan_path": "manual/accessibility-insights-for-web/run-plan.json",
+      "lineage": {
+        "engine_family": "axe-core",
+        "engine_version": "4.11.3",
+        "independence": "derived-surface",
+        "wrapper_of": "axe-core"
+      },
+      "metric_treatment": "FastPass automated checks are axe-derived and must not be counted as an independent engine vote. Needs Review, Tab Stops and Assessment remain separate human-guided results.",
+      "sources": [
+        "https://chromewebstore.google.com/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni",
+        "https://accessibilityinsights.io/docs/web/getstarted/fastpass/",
+        "https://accessibilityinsights.io/docs/web/overview/",
+        "https://github.com/microsoft/accessibility-insights-web/tree/web%402.49.0"
+      ]
+    }
+  ]
+}

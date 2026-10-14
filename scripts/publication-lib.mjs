@@ -40,7 +40,10 @@ export function calculateMetrics(bundle) {
     const sourceTool = comparison.tools[toolId];
     const metricFamily = sourceTool.lineage.metric_family
       || 'criterion-isolated automated detection';
-    const isCriterionDetection = metricFamily === 'criterion-isolated automated detection';
+    const isCriterionDetection = [
+      'criterion-isolated automated detection',
+      'criterion-mapped automated detection',
+    ].includes(metricFamily);
     const defect = result.executions.filter((item) => caseById.get(item.case_id)?.mode === 'tp');
     const controls = result.executions.filter((item) => caseById.get(item.case_id)?.mode === 'safe');
     const hasFail = (execution) => execution.outcomes.some(({ verdict }) => verdict === 'fail');

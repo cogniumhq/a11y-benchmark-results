@@ -36,8 +36,25 @@ function renderReport(bundle, metrics) {
     : `${criterionToolIds.length}-product criterion-mapped`;
   const competitorCount = toolIds.length - 1;
   const competitorLabel = competitorCount === 4 ? 'four' : competitorCount;
+  const latestBrowserServed = comparison.suite.name === 'latest-browser-served';
+  const expectedAssertions = comparison.cases
+    .filter(({ mode }) => mode === 'tp')
+    .flatMap(({ id }) => {
+      const row = comparison.tools[criterionToolIds[0]].cases.find(({ id: caseId }) => caseId === id);
+      return row.expected_criteria.map((criterion) => `${id}\0${criterion}`);
+    });
+  const assertionUnion = new Set();
+  for (const id of criterionToolIds) {
+    for (const row of comparison.tools[id].cases.filter(({ mode }) => mode === 'tp')) {
+      for (const criterion of row.matched_expected_criteria) assertionUnion.add(`${row.id}\0${criterion}`);
+    }
+  }
+  const expectedDistinctCriteria = new Set(expectedAssertions.map((item) => item.split('\0')[1]));
+  const detectedDistinctCriteria = new Set([...assertionUnion].map((item) => item.split('\0')[1]));
   const lines = [
-    '# Accessibility benchmark comparison: v0.1.0 functional scenarios',
+    latestBrowserServed
+      ? '# Accessibility benchmark comparison: latest browser-served corpus'
+      : '# Accessibility benchmark comparison: v0.1.0 functional scenarios',
     '',
     `Published run date: ${publication.run_local_date} (${publication.timezone}).`,
     '',
@@ -67,6 +84,12 @@ function renderReport(bundle, metrics) {
     }),
     '',
     `The ${unionLabel} union detected the declared target criterion on ${metrics.union.defect_cases_target_detected}/${metrics.union.defect_cases} known-defect cases (${pct(metrics.union.defect_cases_target_detected, metrics.union.defect_cases)}). “Target-clean” means only that a tool did not report the corrected control's declared criterion; it does not establish conformance or a pass.`,
+    ...(latestBrowserServed ? [
+      '',
+      `Across multi-criterion cases, the product union detected ${assertionUnion.size}/${expectedAssertions.length} target assertions and ${detectedDistinctCriteria.size}/${expectedDistinctCriteria.size} distinct WCAG criteria. The detected-criteria count happens to be 18; unlike the earlier fixed 18-scenario denominator, it is computed from this run's mapped findings against a 54-criterion denominator.`,
+      '',
+      'Cognium Conformis led this lane with 71/189 target assertions, 47/110 defect pages and 17/54 distinct criteria while all 104 corrected controls remained target-clean. QualWeb was next on assertion count at 59/189, with two corrected-control target findings. This finite-corpus result does not establish conformance or a universal ranking.',
+    ] : []),
     ...(specialistToolIds.length ? [
       '',
       '## Specialized signal lane',
@@ -138,6 +161,12 @@ function renderReport(bundle, metrics) {
     `No tool mapped the declared criterion on ${metrics.union.common_misses.length} known-defect cases: ${commonMisses}.`,
     '',
     'These misses identify automation and scenario-driver backlog. They are not evidence that the fixtures pass. Some require interaction, state transitions, visual judgment, comprehension or a person using assistive technology.',
+    ...(latestBrowserServed ? [
+      '',
+      'Three corrected-control-clean Conformis gaps were logged before publication: [#288](https://github.com/cogniumhq/conformis/issues/288) for visible-label association mapping, [#289](https://github.com/cogniumhq/conformis/issues/289) for the draggable custom slider, and [#290](https://github.com/cogniumhq/conformis/issues/290) for the unnamed SVG chart.',
+      '',
+      'An Alfa-only WCAG 2.5.5 signal was not treated as a Conformis defect because Alfa also reports that criterion on the corrected control. Conformis reports WCAG 2.5.8 on the defect and leaves that corrected control target-clean.',
+    ] : []),
     '',
     '## Evidence and interpretation limits',
     '',
@@ -146,7 +175,9 @@ function renderReport(bundle, metrics) {
     '- Criterion credit is conservative and requires an explicit native-rule-to-WCAG mapping. A tool can report another issue and receive no target credit.',
     '- `cannot-tell` is preserved when no mapped finding exists. It is never converted into pass.',
     '- Durations are diagnostic only and are not used as a product speed ranking.',
-    '- The eight pipeline-integrity cases were outside this lane; the v0.1.0 HTTP server omission is tracked in [a11y-benchmark issue #19](https://github.com/cogniumhq/a11y-benchmark/issues/19).',
+    latestBrowserServed
+      ? '- Thirty-eight automated candidates were outside this lane: 26 AAA and eight pipeline pages were not exposed by the merged server, while four PDF/DOCX cases require native document adapters. They are excluded, not counted as scanner errors.'
+      : '- The eight pipeline-integrity cases were outside this lane; the v0.1.0 HTTP server omission is tracked in [a11y-benchmark issue #19](https://github.com/cogniumhq/a11y-benchmark/issues/19).',
     '- Corrections must publish a new immutable revision and retain this bundle with a supersession link.',
     '',
     'See [method.md](method.md), [metrics.json](metrics.json), [comparison.json](comparison.json) and each product’s schema-valid `result.json` for the reproducible evidence.',

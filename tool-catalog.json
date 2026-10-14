@@ -45,7 +45,7 @@
       "readiness": "current-result",
       "priority": "P0",
       "version": "git:6876cf20c7e20d1a90017387c4d82a370f9a91fa; a11y/html@1.2.1 + tech/html-aria@1.2.1",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/cognium-conformis/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/cognium-conformis/result.json",
       "source": "https://github.com/cogniumhq/conformis"
     },
     {
@@ -64,7 +64,7 @@
       "readiness": "current-result",
       "priority": "P0",
       "version": "4.14.0",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/axe/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/axe/result.json",
       "source": "https://github.com/dequelabs/axe-core"
     },
     {
@@ -83,7 +83,7 @@
       "readiness": "current-result",
       "priority": "P0",
       "version": "Pa11y 10.0.0; HTML_CodeSniffer 2.6.0",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/pa11y-htmlcs/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/pa11y-htmlcs/result.json",
       "source": "https://github.com/pa11y/pa11y"
     },
     {
@@ -102,7 +102,7 @@
       "readiness": "current-result",
       "priority": "P0",
       "version": "4.0.34",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/ibm/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/ibm/result.json",
       "source": "https://github.com/IBMa/equal-access"
     },
     {
@@ -121,7 +121,7 @@
       "readiness": "current-result",
       "priority": "P0",
       "version": "13.5.0; axe-core 4.14.0",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/lighthouse/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/lighthouse/result.json",
       "source": "https://github.com/GoogleChrome/lighthouse"
     },
     {
@@ -140,7 +140,7 @@
       "readiness": "current-result",
       "priority": "P1",
       "version": "rules 0.119.0; Puppeteer integration 0.84.2",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/alfa/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/alfa/result.json",
       "source": "https://github.com/Siteimprove/alfa"
     },
     {
@@ -159,7 +159,7 @@
       "readiness": "current-result",
       "priority": "P1",
       "version": "core 0.9.5; ACT rules 0.8.6; WCAG techniques 0.4.9; best practices 0.7.13",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/qualweb/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/qualweb/result.json",
       "source": "https://github.com/qualweb/qualweb"
     },
     {
@@ -178,7 +178,7 @@
       "readiness": "current-result",
       "priority": "P1",
       "version": "26.10.12 (0a70d65); image sha256:8f21030474e68e06905cfa801b37376e99c0e37867c653c5b6cd7e2dcaf3f503",
-      "current_result": "results/2026-10-13-v0.1.0-functional-scenarios-wave1/nu-html-checker/result.json",
+      "current_result": "results/2026-10-13-v0.1.0-latest-browser-served/nu-html-checker/result.json",
       "source": "https://github.com/validator/validator"
     },
     {

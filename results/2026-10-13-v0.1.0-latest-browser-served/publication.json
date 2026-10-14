@@ -1,0 +1,29 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-10-13-v0.1.0-latest-browser-served",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-10-13",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "469486a4811c5055de9d2524ede1ca520c2774c8",
+    "manifest_sha256": "sha256:a4e01bcd1281bfb1c1951657a815ad2da053e5e233c1d937dd7ed7227c03c9f0"
+  },
+  "harness": {
+    "repository": "cogniumhq/a11y-validation",
+    "revision": "32edddfa06448a583344d940d1ac18b2b2fb1117",
+    "pull_request": "https://github.com/cogniumhq/a11y-validation/pull/11"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "28f9e14db3a095f3d5983a947f233c99772a2b25",
+    "latest_main_verified": "28f9e14db3a095f3d5983a947f233c99772a2b25",
+    "latest_main_difference": "the executed revision matched upstream main when verified for this run"
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}
