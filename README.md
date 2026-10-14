@@ -46,6 +46,12 @@ Siteimprove Alfa and QualWeb remain in the criterion-mapped lane. Nu Html
 Checker runs against the same pages, but its markup findings stay in a separate
 specialized-signal lane and do not contribute to WCAG criterion recall.
 
+The generated report now separates the prior flow-enabled functional core from
+the expanded entry-page lane. The core's 9/18 (50%) and the expanded lane's
+71/189 (38%) are different-scope measurements, not a product trend. Future
+release comparisons must keep the corpus, target assertions, state/flow
+contract, tool configuration and scoring rules fixed.
+
 ## Validate
 
 ```sh
