@@ -57,6 +57,10 @@ confirmed product gaps from corpus, scenario-driver, validation-harness and
 ground-truth-adjudication work, and retains resolved benchmark findings for
 traceability.
 
+`2026-10-19-v0.1.0-conformis-labelled-html` is a later Conformis-only run:
+`a11y/html@1.6.0` and `tech/html-aria@1.3.0` against corpus `94ef3f91`,
+234 of 282 cases. It does not replace the 2026-10-13 multi-product bundles.
+
 ## Validate
 
 ```sh

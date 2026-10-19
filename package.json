@@ -6,6 +6,7 @@
   "scripts": {
     "generate": "node scripts/generate-all.mjs",
     "import:comparison": "node scripts/import-comparison.mjs",
+    "import:conformis-bench": "node scripts/import-conformis-bench.mjs",
     "validate": "node scripts/validate-publication.mjs",
     "test": "npm run validate"
   },
