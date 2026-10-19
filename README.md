@@ -60,6 +60,8 @@ traceability.
 `2026-10-19-v0.1.0-conformis-labelled-html` is a later Conformis-only run:
 `a11y/html@1.6.0` and `tech/html-aria@1.3.0` against corpus `94ef3f91`,
 234 of 282 cases. It does not replace the 2026-10-13 multi-product bundles.
+Its report also scores this run and those October products on the 196 cases
+whose assertion did not change.
 
 ## Validate
 

@@ -69,3 +69,11 @@ harness. Relative stylesheets and frames resolve inside the corpus checkout.
 The corpus state-driver contract was not executed. Loaded-page results do not
 measure defects that appear only after the declared interaction. Human and
 assistive-technology protocols were not run. No other product was refreshed.
+
+## Comparison with the 2026-10-13 bundle
+
+The headline above is this run's own denominator. It is not comparable with
+the 2026-10-13 report's 71/189. `prior-lane.json` lists the cases whose
+assertion is unchanged and which both Conformis runs executed. The report
+scores every 2026-10-13 product on that set. Those cells are the October
+measurements, not a new run. Nu Html Checker stays out of the criterion table.
