@@ -116,6 +116,26 @@ blended score:
 Any trend claim must hold the corpus revision, expected assertions, state/flow
 contract, tool configuration and scoring rules constant.
 
+## Defect-routing policy
+
+Benchmark misses are routed by evidence rather than filed automatically as
+product defects:
+
+- A defect/control pair distinguished by another engine and left target-clean
+  by Conformis can support a focused Conformis gap.
+- A non-default state that was never reached is corpus or scenario-driver work,
+  not evidence that an executed product rule missed the defect.
+- A static assertion missed by every engine requires ground-truth adjudication
+  before assigning a product defect.
+- Media meaning, flash thresholds and other judgment-sensitive observations
+  must distinguish automated evidence, guided review and cannot-tell.
+- Load failures or normalization errors belong to the validation harness and
+  cannot be scored as ordinary misses or clean controls.
+
+The report's defect ledger records the open and resolved cross-repository issues
+for this run. Consolidated tickets own repeated capability families so shared
+misses do not become dozens of duplicate product issues.
+
 Three corrected-control-clean Conformis gaps were logged before publication:
 
 - <https://github.com/cogniumhq/conformis/issues/288>
