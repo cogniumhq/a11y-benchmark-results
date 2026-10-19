@@ -1,0 +1,29 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-10-19-v0.1.0-conformis-labelled-html",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-10-19",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "94ef3f918e80a2bbc5f586271a55f9439c9fa637",
+    "manifest_sha256": "sha256:e47c343fbe2b73049756ef566d0fa7e32e0ae90d28e214b45efaf20d3ac8edfe"
+  },
+  "harness": {
+    "repository": "cogniumhq/conformis",
+    "revision": "c315d202b3561213e81f989b98104e172547189f",
+    "path": "packs/a11y-html/bench/a11y-benchmark-2026-10"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "c315d202b3561213e81f989b98104e172547189f",
+    "latest_main_verified": null,
+    "latest_main_difference": "The executed commit is detached and is not claimed to equal origin/main. The bench label pin was updated locally to this corpus revision; that pin is recorded in this bundle rather than as a Conformis commit."
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}

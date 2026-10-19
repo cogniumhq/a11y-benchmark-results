@@ -19,8 +19,129 @@ const mark = (row) => {
   return '.';
 };
 
+function renderConformisLabelledReport(bundle, metrics) {
+  const comparison = readJson(path.join(bundle, 'comparison.json'));
+  const publication = readJson(path.join(bundle, 'publication.json'));
+  const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
+  const results = resultFiles(bundle).map(readJson);
+  const tool = metrics.tools.cognium;
+  const bench = comparison.bench_overall ?? {};
+  const excluded = comparison.excluded ?? {};
+  const lines = [
+    '# Accessibility benchmark: Cognium Conformis labelled HTML pages',
+    '',
+    `Published run date: ${publication.run_local_date} (${publication.timezone}).`,
+    '',
+    `Classification: **${publication.classification}**. Cognium maintains this corpus and makes Conformis, so this bundle is not an independent reproduction.`,
+    '',
+    'This is a single-run, finite-corpus detection result for one product. It is not WCAG certification, legal advice, a universal product ranking, a performance benchmark or a guarantee about production websites. It does not replace the 2026-10-13 multi-product bundles: those pin an earlier corpus revision and earlier pack versions.',
+    '',
+    '## Identity and scope',
+    '',
+    `- Corpus: \`${comparison.corpus.repository}@${comparison.corpus.version}\` (\`${comparison.corpus.revision}\`).`,
+    `- Corpus manifest: \`${comparison.corpus.manifest_sha256}\`.`,
+    `- Conformis commit: \`${publication.cognium_conformis.revision}\`. ${publication.cognium_conformis.latest_main_difference}`,
+    `- Packs: \`${comparison.tools.cognium.version}\`.`,
+    `- Bench harness: \`${publication.harness.repository}\` \`${publication.harness.path}\`.`,
+    `- Executed lane: ${comparison.coverage.selected_cases}/${comparison.coverage.corpus_cases} corpus cases (${comparison.coverage.not_selected_cases} not in this denominator).`,
+    `- Human and assistive-technology protocols executed: 0/${comparison.coverage.human_protocols}.`,
+    '',
+    'The lane is every corpus case whose page the Conformis bench labelled `should-report` or `must-not-report` and which declares at least one WCAG criterion. `should-report` is a known defect. `must-not-report` is a corrected control. Pages the bench itself classifies as `cannot-tell` or journey-level `other` were run, and their counts are below, but they are not in the recall denominator: a cannot-tell page has no automated pass/fail, and a journey-level broken step says the defect is not on that page alone.',
+    '',
+    `| Bench class | Pages run | In this denominator |`,
+    `|---|---:|---|`,
+    `| should-report | ${bench.defects ?? 'n/a'} | yes, as known defects |`,
+    `| must-not-report | ${bench.negatives ?? 'n/a'} | yes, as corrected controls |`,
+    `| cannot-tell | ${bench.cannotTell ?? 'n/a'} | no |`,
+    `| other (journey-level) | ${bench.other ?? 'n/a'} | no |`,
+    `| run errors | ${bench.runErrors ?? 'n/a'} | kept when the page is otherwise in the lane; an error is not a pass |`,
+    '',
+    `Corpus cases with no bench row: ${excluded.not_run ?? 'n/a'}. Bench rows that are not corpus cases: ${excluded.not_corpus ?? 'n/a'}. In-lane pages with no declared criterion: ${excluded.no_criteria ?? 'n/a'}.`,
+    '',
+    '## Result',
+    '',
+    `| Known-defect criteria detected | ${tool.expected_criteria_matched}/${tool.expected_criteria} (${pct(tool.expected_criteria_matched, tool.expected_criteria)}) |`,
+    `| Known-defect pages with at least one declared criterion detected | ${tool.defect_cases_target_detected}/${tool.defect_cases} (${pct(tool.defect_cases_target_detected, tool.defect_cases)}) |`,
+    `| Corrected controls target-clean | ${tool.controls_target_clean}/${tool.control_cases} |`,
+    `| Completed / errors | ${tool.completed}/${tool.cases} completed, ${tool.errors} errors |`,
+    '',
+    '“Target-clean” means only that Conformis did not report the corrected control\'s declared criterion. It does not establish conformance. `cannot-tell` is preserved when no mapped finding exists. It is never converted into pass.',
+    '',
+    'The bench\'s own score, which drops cannot-tell and journey-level pages before counting, is a different denominator. Use the fractions in this section when comparing with other bundles in this repository. The bench totals above are the product\'s own classification, not a second recall figure.',
+    '',
+    '## What this run did not do',
+    '',
+    `- State exploration: \`${JSON.stringify(comparison.tools.cognium.source.explore)}\`. The corpus state-driver contract was not executed.`,
+    '- No other product was run. axe-core, Pa11y, IBM Equal Access, Lighthouse, Alfa, QualWeb and Nu Html Checker are unchanged from the 2026-10-13 bundles.',
+    '- axe DevTools is inventoried but was not separately executed because its free automated checks run on axe-core; counting that surface as another independent engine result would duplicate the axe family. Accessibility Insights for Web is protocol-ready but not executed: its FastPass automated checks are axe-derived, while Needs Review, Tab Stops and Assessment require separate human-guided evidence. See [the Accessibility Insights protocol](manual/accessibility-insights-for-web/PROTOCOL.md) and [run plan](manual/accessibility-insights-for-web/run-plan.json).',
+    '',
+    '## Tool lineage',
+    '',
+    '| Tool | Version/build | Engine family | Independence | Interface |',
+    '|---|---|---|---|---|',
+    ...results.map((result) => {
+      const item = result.run.tool;
+      return `| ${item.name} | ${item.version} | ${item.engine_family} | ${item.independence}${item.wrapper_of ? ` of ${item.wrapper_of}` : ''} | ${item.tool_surface} |`;
+    }),
+    '',
+    '## Product surface inventory',
+    '',
+    '| Product surface | Version | Lane | Engine lineage | Status in this bundle | Metric treatment |',
+    '|---|---|---|---|---|---|',
+    ...inventory.surfaces.map((surface) => {
+      const lineage = surface.lineage;
+      const engine = `${lineage.engine_family}${lineage.engine_version ? ` ${lineage.engine_version}` : ' (version not established)'}`;
+      const relationship = lineage.wrapper_of ? `${lineage.independence} of ${lineage.wrapper_of}` : lineage.independence;
+      return `| ${surface.name} | ${surface.version} | ${surface.measurement_lane} | ${engine}; ${relationship} | ${surface.execution_status} | ${surface.metric_treatment} |`;
+    }),
+    '',
+    '## Execution environment',
+    '',
+    '| Tool | OS | Runtime | Browser | Viewport | Run window (UTC) |',
+    '|---|---|---|---|---|---|',
+    ...results.map((result) => {
+      const run = result.run;
+      const environment = run.environment;
+      return `| ${run.tool.name} | ${environment.os} | ${environment.runtime} | ${environment.browser} ${environment.browser_version} | ${environment.viewport.width}×${environment.viewport.height} | ${run.started_at} – ${run.completed_at} |`;
+    }),
+    '',
+    '## Case matrix',
+    '',
+    'Legend: `T` declared target criterion detected; `o` another automated finding only; `.` no automated finding; `E` execution error.',
+    '',
+    '| Case | Expected | Cognium Conformis |',
+    '|---|---|---:|',
+    ...comparison.cases.map((item) => {
+      const row = comparison.tools.cognium.cases.find(({ id }) => id === item.id);
+      return `| \`${item.id}\` | ${item.mode === 'tp' ? 'known defect' : 'corrected control'} | ${mark(row)} |`;
+    }),
+    '',
+    '## Shared gaps',
+    '',
+    `Conformis did not map the declared criterion on ${metrics.union.common_misses.length} known-defect cases: ${metrics.union.common_misses.map((id) => `\`${id}\``).join(', ')}.`,
+    '',
+    'These misses are not evidence that the fixtures pass. Some require interaction, a state the bench did not drive, visual judgment, comprehension or a person using assistive technology.',
+    '',
+    '## Evidence and interpretation limits',
+    '',
+    '- One repetition. This bundle does not estimate run-to-run variance.',
+    '- Native output is a SHA-256 digest of each bench row. The raw row is not redistributed.',
+    '- Criterion credit requires an explicit control-to-WCAG mapping from the pack\'s own `supports` list. A deviation under another criterion receives no target credit.',
+    '- `examined_count` is null. Conformis counts controls, not elements examined.',
+    '- Durations are diagnostic only and are not a speed ranking.',
+    '- Corrections must publish a new immutable revision and retain this bundle.',
+    '',
+    'See [method.md](method.md), [metrics.json](metrics.json), [comparison.json](comparison.json) and [cognium-conformis/result.json](cognium-conformis/result.json).',
+    '',
+  ];
+  return lines.join('\n');
+}
+
 function renderReport(bundle, metrics) {
   const comparison = readJson(path.join(bundle, 'comparison.json'));
+  if (comparison.suite.name === 'conformis-labelled-html') {
+    return renderConformisLabelledReport(bundle, metrics);
+  }
   const publication = readJson(path.join(bundle, 'publication.json'));
   const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
   const results = resultFiles(bundle).map(readJson);

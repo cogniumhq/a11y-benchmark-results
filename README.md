@@ -52,6 +52,10 @@ the expanded entry-page lane. The core's 9/18 (50%) and the expanded lane's
 release comparisons must keep the corpus, target assertions, state/flow
 contract, tool configuration and scoring rules fixed.
 
+`2026-10-19-v0.1.0-conformis-labelled-html` is a later Conformis-only run:
+`a11y/html@1.6.0` and `tech/html-aria@1.3.0` against corpus `94ef3f91`,
+234 of 282 cases. It does not replace the 2026-10-13 multi-product bundles.
+
 ## Validate
 
 ```sh
