@@ -39,6 +39,31 @@ Corpus cases with no bench row: 20. Bench rows that are not corpus cases: 57. In
 
 The bench's own score, which drops cannot-tell and journey-level pages before counting, is a different denominator. Use the fractions in this section when comparing with other bundles in this repository. The bench totals above are the product's own classification, not a second recall figure.
 
+## Comparison with 2026-10-13-v0.1.0-latest-browser-served
+
+Cases published on 2026-10-13 whose assertion (case id, min_criteria, must_not_report) is unchanged at corpus 94ef3f91 and which this Conformis run also executed. Other products were not re-run; their cells are the 2026-10-13 measurements on this same case set. Nu Html Checker stays in its specialized markup lane and is not given a WCAG criterion score.
+
+Shared set: 196 cases (95 known-defect pages, 152 declared criteria, 101 corrected controls).
+8 cases changed assertion and are excluded: `media-captions_unlabelled_track`, `scenario-forced_colors`, `scenario-dragging_required`, `scenario-safe_dragging_required`, `surface-email_contrast_darkmode`, `surface-safe_email_contrast_darkmode`, `flash-three_flashes_exactly`, `flash-safe_three_flashes_exactly`.
+10 October cases are not in this run and are excluded: `color-chart_series_color_only`, `journey-booking-broken`, `journey-signin-broken`, `journey-consistent-help-broken`, `journey-destructive-broken`, `journey-consent-broken`, `journey-navigate-broken`, `journey-signup-broken`, `journey-checkout-broken`, `journey-session-broken`.
+
+| Tool | Known-defect criteria detected | Corrected controls target-clean | Known-defect pages |
+|---|---:|---:|---:|
+| Cognium Conformis (this run) | 79/152 (52%) | 100/101 (99%) | 58/95 (61%) |
+| Cognium Conformis (2026-10-13) | 70/152 (46%) | 101/101 (100%) | 46/95 (48%) |
+| axe-core (2026-10-13) | 15/152 (10%) | 101/101 (100%) | 15/95 (16%) |
+| Pa11y / HTML_CodeSniffer (2026-10-13) | 11/152 (7%) | 100/101 (99%) | 11/95 (12%) |
+| IBM Equal Access (2026-10-13) | 31/152 (20%) | 101/101 (100%) | 30/95 (32%) |
+| Lighthouse accessibility (2026-10-13) | 15/152 (10%) | 101/101 (100%) | 15/95 (16%) |
+| Siteimprove Alfa (2026-10-13) | 20/152 (13%) | 100/101 (99%) | 20/95 (21%) |
+| QualWeb (2026-10-13) | 58/152 (38%) | 99/101 (98%) | 37/95 (39%) |
+
+Nu Html Checker is omitted. It is a markup validator, and the October bundle does not give it a WCAG criterion score.
+
+Declared criteria matched by an October product and missed by this run: `capture-client_mounted` 4.1.2 (Cognium Conformis, IBM Equal Access, QualWeb); `delivery-client_js` 1.1.1 (Cognium Conformis, axe-core, Pa11y / HTML_CodeSniffer, IBM Equal Access, Lighthouse accessibility, Siteimprove Alfa, QualWeb); `delivery-client_js_delayed` 1.1.1 (Cognium Conformis, axe-core, Pa11y / HTML_CodeSniffer, IBM Equal Access, Lighthouse accessibility, Siteimprove Alfa, QualWeb); `delivery-shadow_dom_open` 1.1.1 (Cognium Conformis, axe-core, IBM Equal Access, Lighthouse accessibility, Siteimprove Alfa, QualWeb); `delivery-web_component` 1.1.1 (Cognium Conformis, axe-core, IBM Equal Access, Lighthouse accessibility, Siteimprove Alfa, QualWeb); `delivery-progressive_enhancement` 1.1.1 (Cognium Conformis, axe-core, Pa11y / HTML_CodeSniffer, IBM Equal Access, Lighthouse accessibility, Siteimprove Alfa, QualWeb); `scenario-touch_targets` 2.5.5 (Siteimprove Alfa).
+
+Corrected controls where this run mapped a declared criterion: `scenario-safe_motion_actuation`.
+
 ## What this run did not do
 
 - State exploration: `false`. The corpus state-driver contract was not executed.

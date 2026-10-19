@@ -19,6 +19,89 @@ const mark = (row) => {
   return '.';
 };
 
+function laneScore(toolCases, priorCases, ids) {
+  const byId = new Map(toolCases.map((row) => [row.id, row]));
+  const score = { defects: 0, pages: 0, criteria: 0, matched: 0, controls: 0, clean: 0 };
+  for (const id of ids) {
+    const prior = priorCases.get(id);
+    const row = byId.get(id);
+    const expected = new Set(prior.expected_criteria);
+    const hit = (row?.matched_expected_criteria ?? []).filter((criterion) => expected.has(criterion));
+    if (prior.mode === 'tp') {
+      score.defects += 1;
+      score.criteria += prior.expected_criteria.length;
+      score.matched += hit.length;
+      if (hit.length) score.pages += 1;
+    } else {
+      score.controls += 1;
+      if (!hit.length) score.clean += 1;
+    }
+  }
+  return score;
+}
+
+function priorLaneSection(bundle, comparison) {
+  const lanePath = path.join(bundle, 'prior-lane.json');
+  if (!fs.existsSync(lanePath)) return [];
+  const lane = readJson(lanePath);
+  const prior = readJson(path.join(ROOT, 'results', lane.prior_bundle, 'comparison.json'));
+  const ids = lane.comparable_case_ids;
+  const priorCases = new Map(prior.cases.map((item) => [item.id, item]));
+  const current = comparison.tools.cognium;
+  const columns = [
+    { label: `${current.label} (this run)`, cases: current.cases },
+    ...prior.tool_order
+      .filter((id) => id !== 'nu-html-checker')
+      .map((id) => ({ label: `${prior.tools[id].label} (2026-10-13)`, cases: prior.tools[id].cases })),
+  ];
+  const scores = columns.map((column) => laneScore(column.cases, priorCases, ids));
+  const denominator = scores[0];
+  const currentHits = new Map(current.cases.map((row) => [row.id, new Set(row.matched_expected_criteria)]));
+  const gaps = [];
+  for (const id of ids) {
+    const item = priorCases.get(id);
+    if (item.mode !== 'tp') continue;
+    const hit = currentHits.get(id) ?? new Set();
+    for (const criterion of item.expected_criteria) {
+      if (hit.has(criterion)) continue;
+      const also = columns.slice(1).filter((column) => {
+        const row = column.cases.find((candidate) => candidate.id === id);
+        return row?.matched_expected_criteria.includes(criterion);
+      }).map((column) => column.label.replace(' (2026-10-13)', ''));
+      if (also.length) gaps.push({ id, criterion, also });
+    }
+  }
+  const falseAlarms = ids.filter((id) => {
+    const item = priorCases.get(id);
+    return item.mode === 'safe' && (currentHits.get(id)?.size ?? 0) > 0;
+  });
+  const row = (score) => `| ${score.label} | ${score.matched}/${score.criteria} (${pct(score.matched, score.criteria)}) | ${score.clean}/${score.controls} (${pct(score.clean, score.controls)}) | ${score.pages}/${score.defects} (${pct(score.pages, score.defects)}) |`;
+  return [
+    `## Comparison with ${lane.prior_bundle}`,
+    '',
+    lane.rule,
+    '',
+    `Shared set: ${ids.length} cases (${denominator.defects} known-defect pages, ${denominator.criteria} declared criteria, ${denominator.controls} corrected controls).`,
+    `${lane.excluded.assertion_changed.length} cases changed assertion and are excluded: ${lane.excluded.assertion_changed.map((id) => `\`${id}\``).join(', ')}.`,
+    `${lane.excluded.not_in_this_run.length} October cases are not in this run and are excluded: ${lane.excluded.not_in_this_run.map((id) => `\`${id}\``).join(', ')}.`,
+    '',
+    '| Tool | Known-defect criteria detected | Corrected controls target-clean | Known-defect pages |',
+    '|---|---:|---:|---:|',
+    ...scores.map((score, index) => row({ ...score, label: columns[index].label })),
+    '',
+    'Nu Html Checker is omitted. It is a markup validator, and the October bundle does not give it a WCAG criterion score.',
+    '',
+    gaps.length
+      ? `Declared criteria matched by an October product and missed by this run: ${gaps.map((gap) => `\`${gap.id}\` ${gap.criterion} (${gap.also.join(', ')})`).join('; ')}.`
+      : 'No declared criterion matched by an October product was missed by this run.',
+    '',
+    falseAlarms.length
+      ? `Corrected controls where this run mapped a declared criterion: ${falseAlarms.map((id) => `\`${id}\``).join(', ')}.`
+      : 'This run mapped no declared criterion on a corrected control in the shared set.',
+    '',
+  ];
+}
+
 function renderConformisLabelledReport(bundle, metrics) {
   const comparison = readJson(path.join(bundle, 'comparison.json'));
   const publication = readJson(path.join(bundle, 'publication.json'));
@@ -69,6 +152,7 @@ function renderConformisLabelledReport(bundle, metrics) {
     '',
     'The bench\'s own score, which drops cannot-tell and journey-level pages before counting, is a different denominator. Use the fractions in this section when comparing with other bundles in this repository. The bench totals above are the product\'s own classification, not a second recall figure.',
     '',
+    ...priorLaneSection(bundle, comparison),
     '## What this run did not do',
     '',
     `- State exploration: \`${JSON.stringify(comparison.tools.cognium.source.explore)}\`. The corpus state-driver contract was not executed.`,
