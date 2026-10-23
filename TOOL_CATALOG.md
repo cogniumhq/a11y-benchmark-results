@@ -1,6 +1,6 @@
 # Accessibility benchmark tool catalog
 
-Research review date: 2026-10-19.
+Research review date: 2026-10-23.
 
 This catalog represents 52 product surfaces across 8 categories. It is a comparison roadmap, not a claim that every product has been run. The immutable result bundles remain the only source of executed measurements.
 
@@ -121,7 +121,7 @@ A represented tool has inventory coverage only. It has no inferred detection sco
 
 | Product surface | Surface | Access | Engine lineage | Metric family | Maturity | Readiness | Priority |
 |---|---|---|---|---|---|---|---:|
-| [Cognium Conformis](https://github.com/cogniumhq/conformis) ([result](results/2026-10-19-v0.1.0-conformis-labelled-html/cognium-conformis/result.json)) | site-scanner | commercial | Conformis a11y/html and tech/html-aria; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
+| [Cognium Conformis](https://github.com/cogniumhq/conformis) ([result](results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2/cognium-conformis/result.json)) | site-scanner | commercial | Conformis a11y/html and tech/html-aria; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
 | [axe-core](https://github.com/dequelabs/axe-core) ([result](results/2026-10-13-v0.1.0-latest-browser-served/axe/result.json)) | automation-engine | open-source | axe-core; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |
 | [Pa11y / HTML_CodeSniffer](https://github.com/pa11y/pa11y) ([result](results/2026-10-13-v0.1.0-latest-browser-served/pa11y-htmlcs/result.json)) | automation-runner | open-source | HTML_CodeSniffer; wrapper of HTML_CodeSniffer | criterion-isolated automated detection | executed | current-result | P0 |
 | [IBM Equal Access Accessibility Checker](https://github.com/IBMa/equal-access) ([result](results/2026-10-13-v0.1.0-latest-browser-served/ibm/result.json)) | automation-engine | open-source | IBM Equal Access; independent-engine | criterion-isolated automated detection | executed | current-result | P0 |

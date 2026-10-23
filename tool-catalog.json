@@ -1,7 +1,7 @@
 {
   "format": "cognium-a11y-tool-catalog",
   "format_version": "1.0.0",
-  "reviewed_on": "2026-10-19",
+  "reviewed_on": "2026-10-23",
   "coverage_states": {
     "represented": "Named and classified, but no complete benchmark runner or protocol exists yet.",
     "executable": "A benchmark runner or protocol exists, but this catalog does not claim a completed result.",
@@ -35,7 +35,9 @@
       "provider": "Cognium",
       "category": "web-automated",
       "surface": "site-scanner",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "commercial",
       "engine_family": "Conformis a11y/html and tech/html-aria",
       "independence": "independent-engine",
@@ -44,8 +46,8 @@
       "maturity": "executed",
       "readiness": "current-result",
       "priority": "P0",
-      "version": "git:c315d202b3561213e81f989b98104e172547189f; a11y/html@1.6.0 + tech/html-aria@1.3.0",
-      "current_result": "results/2026-10-19-v0.1.0-conformis-labelled-html/cognium-conformis/result.json",
+      "version": "git:26ab6cc85a810f6b0a39d15f1953314dafdb4d03; a11y/html@1.6.1 + tech/html-aria@1.3.0 (state exploration depth 2)",
+      "current_result": "results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2/cognium-conformis/result.json",
       "source": "https://github.com/cogniumhq/conformis"
     },
     {
@@ -54,7 +56,9 @@
       "provider": "Deque Systems",
       "category": "web-automated",
       "surface": "automation-engine",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "axe-core",
       "independence": "independent-engine",
@@ -73,7 +77,9 @@
       "provider": "Pa11y and HTML_CodeSniffer contributors",
       "category": "web-automated",
       "surface": "automation-runner",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "HTML_CodeSniffer",
       "independence": "wrapper",
@@ -92,7 +98,9 @@
       "provider": "IBM",
       "category": "web-automated",
       "surface": "automation-engine",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "IBM Equal Access",
       "independence": "independent-engine",
@@ -111,7 +119,9 @@
       "provider": "Google",
       "category": "web-automated",
       "surface": "browser-audit",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "axe-core-derived Lighthouse audits",
       "independence": "derived-surface",
@@ -130,7 +140,9 @@
       "provider": "Siteimprove",
       "category": "web-automated",
       "surface": "automation-engine",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "Alfa ACT rules",
       "independence": "independent-engine",
@@ -149,7 +161,9 @@
       "provider": "University of Lisbon / QualWeb contributors",
       "category": "web-automated",
       "surface": "automation-engine",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "QualWeb ACT, WCAG techniques and best practices",
       "independence": "independent-engine",
@@ -168,7 +182,9 @@
       "provider": "Validator contributors",
       "category": "web-automated",
       "surface": "conformance-checker",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "v.Nu HTML/CSS/SVG checker",
       "independence": "independent-engine",
@@ -187,7 +203,9 @@
       "provider": "YRA-Tech / community",
       "category": "web-automated",
       "surface": "ensemble-runner",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "multi-engine ensemble",
       "independence": "ensemble-wrapper",
@@ -204,7 +222,9 @@
       "provider": "WebAIM",
       "category": "web-automated",
       "surface": "engine-and-api",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "mixed",
       "engine_family": "WAVE",
       "independence": "independent-engine",
@@ -221,7 +241,9 @@
       "provider": "Tenon",
       "category": "web-automated",
       "surface": "hosted-api",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "commercial",
       "engine_family": "Tenon",
       "independence": "unknown-proprietary",
@@ -238,7 +260,10 @@
       "provider": "Level Access",
       "category": "enterprise-platform",
       "surface": "automation-sdk",
-      "artifact_scopes": ["web", "mobile"],
+      "artifact_scopes": [
+        "web",
+        "mobile"
+      ],
       "access": "commercial",
       "engine_family": "Level Access Access Engine",
       "independence": "unknown-proprietary",
@@ -255,7 +280,10 @@
       "provider": "Evinced",
       "category": "enterprise-platform",
       "surface": "automation-sdk",
-      "artifact_scopes": ["web", "mobile"],
+      "artifact_scopes": [
+        "web",
+        "mobile"
+      ],
       "access": "commercial",
       "engine_family": "Evinced",
       "independence": "unknown-proprietary",
@@ -272,7 +300,9 @@
       "provider": "BrowserStack",
       "category": "enterprise-platform",
       "surface": "hosted-platform-and-sdk",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "commercial",
       "engine_family": "Spectra rule engine",
       "independence": "unknown-proprietary",
@@ -289,7 +319,9 @@
       "provider": "Siteimprove",
       "category": "enterprise-platform",
       "surface": "automation-integration",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "mixed",
       "engine_family": "Alfa",
       "independence": "derived-surface",
@@ -306,7 +338,9 @@
       "provider": "Deque Systems",
       "category": "enterprise-platform",
       "surface": "site-monitoring-platform",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "commercial",
       "engine_family": "axe family",
       "independence": "derived-surface",
@@ -323,7 +357,11 @@
       "provider": "TPGi",
       "category": "enterprise-platform",
       "surface": "governance-and-testing-platform",
-      "artifact_scopes": ["web", "mobile", "document"],
+      "artifact_scopes": [
+        "web",
+        "mobile",
+        "document"
+      ],
       "access": "commercial",
       "engine_family": "ARC",
       "independence": "unknown-proprietary",
@@ -340,7 +378,9 @@
       "provider": "Deque Systems",
       "category": "browser-assisted",
       "surface": "browser-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "mixed",
       "engine_family": "axe-core",
       "independence": "derived-surface",
@@ -357,7 +397,9 @@
       "provider": "Microsoft",
       "category": "browser-assisted",
       "surface": "browser-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "axe-core plus Microsoft assisted tests",
       "independence": "derived-surface",
@@ -374,7 +416,9 @@
       "provider": "WebAIM",
       "category": "browser-assisted",
       "surface": "browser-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "free",
       "engine_family": "WAVE",
       "independence": "derived-surface",
@@ -391,7 +435,9 @@
       "provider": "TPGi",
       "category": "browser-assisted",
       "surface": "developer-tools-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "free",
       "engine_family": "ARC Toolkit",
       "independence": "inspection-tool",
@@ -408,7 +454,9 @@
       "provider": "U.S. Social Security Administration",
       "category": "browser-assisted",
       "surface": "bookmarklet",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "free",
       "engine_family": "ANDI",
       "independence": "inspection-tool",
@@ -425,7 +473,9 @@
       "provider": "Siteimprove",
       "category": "browser-assisted",
       "surface": "browser-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "free",
       "engine_family": "Alfa",
       "independence": "derived-surface",
@@ -442,7 +492,9 @@
       "provider": "Silktide",
       "category": "browser-assisted",
       "surface": "browser-extension",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "free",
       "engine_family": "Silktide",
       "independence": "unknown-proprietary",
@@ -459,7 +511,9 @@
       "provider": "Sa11y contributors",
       "category": "browser-assisted",
       "surface": "in-page-auditing-tool",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "Sa11y",
       "independence": "inspection-tool",
@@ -476,7 +530,9 @@
       "provider": "Princeton University / contributors",
       "category": "browser-assisted",
       "surface": "in-page-auditing-tool",
-      "artifact_scopes": ["web"],
+      "artifact_scopes": [
+        "web"
+      ],
       "access": "open-source",
       "engine_family": "Editoria11y",
       "independence": "inspection-tool",
@@ -493,7 +549,9 @@
       "provider": "Microsoft",
       "category": "desktop-native",
       "surface": "desktop-inspector-and-checker",
-      "artifact_scopes": ["windows-app"],
+      "artifact_scopes": [
+        "windows-app"
+      ],
       "access": "open-source",
       "engine_family": "Accessibility Insights Windows rules",
       "independence": "inspection-tool",
@@ -510,7 +568,9 @@
       "provider": "Google",
       "category": "mobile-native",
       "surface": "android-app-scanner",
-      "artifact_scopes": ["android-app"],
+      "artifact_scopes": [
+        "android-app"
+      ],
       "access": "free",
       "engine_family": "Android Accessibility Test Framework",
       "independence": "derived-surface",
@@ -527,7 +587,9 @@
       "provider": "Google",
       "category": "mobile-native",
       "surface": "automation-framework",
-      "artifact_scopes": ["android-app"],
+      "artifact_scopes": [
+        "android-app"
+      ],
       "access": "open-source",
       "engine_family": "Android Accessibility Test Framework",
       "independence": "independent-engine",
@@ -544,7 +606,10 @@
       "provider": "Apple",
       "category": "mobile-native",
       "surface": "platform-inspector",
-      "artifact_scopes": ["ios-app", "macos-app"],
+      "artifact_scopes": [
+        "ios-app",
+        "macos-app"
+      ],
       "access": "built-in",
       "engine_family": "Apple accessibility audits",
       "independence": "inspection-tool",
@@ -561,7 +626,10 @@
       "provider": "Apple",
       "category": "mobile-native",
       "surface": "test-framework-api",
-      "artifact_scopes": ["ios-app", "macos-app"],
+      "artifact_scopes": [
+        "ios-app",
+        "macos-app"
+      ],
       "access": "built-in",
       "engine_family": "Apple accessibility audits",
       "independence": "derived-surface",
@@ -578,7 +646,10 @@
       "provider": "Deque Systems",
       "category": "mobile-native",
       "surface": "mobile-sdk-and-analyzer",
-      "artifact_scopes": ["ios-app", "android-app"],
+      "artifact_scopes": [
+        "ios-app",
+        "android-app"
+      ],
       "access": "commercial",
       "engine_family": "Deque mobile rules",
       "independence": "unknown-proprietary",
@@ -595,7 +666,10 @@
       "provider": "BrowserStack",
       "category": "mobile-native",
       "surface": "hosted-device-platform",
-      "artifact_scopes": ["ios-app", "android-app"],
+      "artifact_scopes": [
+        "ios-app",
+        "android-app"
+      ],
       "access": "commercial",
       "engine_family": "BrowserStack mobile accessibility",
       "independence": "unknown-proprietary",
@@ -612,7 +686,9 @@
       "provider": "PDF/UA Foundation",
       "category": "document",
       "surface": "pdf-checker",
-      "artifact_scopes": ["pdf"],
+      "artifact_scopes": [
+        "pdf"
+      ],
       "access": "free",
       "engine_family": "PAC",
       "independence": "independent-engine",
@@ -629,7 +705,9 @@
       "provider": "Adobe",
       "category": "document",
       "surface": "pdf-checker",
-      "artifact_scopes": ["pdf"],
+      "artifact_scopes": [
+        "pdf"
+      ],
       "access": "commercial",
       "engine_family": "Adobe PDF accessibility checker",
       "independence": "unknown-proprietary",
@@ -646,7 +724,9 @@
       "provider": "CommonLook",
       "category": "document",
       "surface": "pdf-checker",
-      "artifact_scopes": ["pdf"],
+      "artifact_scopes": [
+        "pdf"
+      ],
       "access": "free",
       "engine_family": "CommonLook PDF Validator",
       "independence": "unknown-proprietary",
@@ -663,7 +743,12 @@
       "provider": "Microsoft",
       "category": "document",
       "surface": "office-document-checker",
-      "artifact_scopes": ["word-processing", "spreadsheet", "presentation", "email"],
+      "artifact_scopes": [
+        "word-processing",
+        "spreadsheet",
+        "presentation",
+        "email"
+      ],
       "access": "built-in",
       "engine_family": "Microsoft 365 Accessibility Checker",
       "independence": "unknown-proprietary",
@@ -680,7 +765,9 @@
       "provider": "DAISY Consortium",
       "category": "document",
       "surface": "epub-checker",
-      "artifact_scopes": ["epub"],
+      "artifact_scopes": [
+        "epub"
+      ],
       "access": "open-source",
       "engine_family": "axe-core plus EPUB-specific checks",
       "independence": "derived-surface",
@@ -697,7 +784,11 @@
       "provider": "Freedom Scientific",
       "category": "assistive-technology",
       "surface": "windows-screen-reader",
-      "artifact_scopes": ["web", "windows-app", "document"],
+      "artifact_scopes": [
+        "web",
+        "windows-app",
+        "document"
+      ],
       "access": "commercial",
       "engine_family": "JAWS",
       "independence": "assistive-technology",
@@ -714,7 +805,10 @@
       "provider": "TPGi / Freedom Scientific",
       "category": "assistive-technology",
       "surface": "speech-output-inspection-tool",
-      "artifact_scopes": ["web", "windows-app"],
+      "artifact_scopes": [
+        "web",
+        "windows-app"
+      ],
       "access": "commercial",
       "engine_family": "JAWS speech output",
       "independence": "derived-surface",
@@ -731,7 +825,11 @@
       "provider": "NV Access",
       "category": "assistive-technology",
       "surface": "windows-screen-reader",
-      "artifact_scopes": ["web", "windows-app", "document"],
+      "artifact_scopes": [
+        "web",
+        "windows-app",
+        "document"
+      ],
       "access": "open-source",
       "engine_family": "NVDA",
       "independence": "assistive-technology",
@@ -748,7 +846,12 @@
       "provider": "Apple",
       "category": "assistive-technology",
       "surface": "apple-screen-reader",
-      "artifact_scopes": ["web", "ios-app", "macos-app", "document"],
+      "artifact_scopes": [
+        "web",
+        "ios-app",
+        "macos-app",
+        "document"
+      ],
       "access": "built-in",
       "engine_family": "VoiceOver",
       "independence": "assistive-technology",
@@ -765,7 +868,10 @@
       "provider": "Google",
       "category": "assistive-technology",
       "surface": "android-screen-reader",
-      "artifact_scopes": ["web", "android-app"],
+      "artifact_scopes": [
+        "web",
+        "android-app"
+      ],
       "access": "free",
       "engine_family": "TalkBack",
       "independence": "assistive-technology",
@@ -782,7 +888,11 @@
       "provider": "Microsoft",
       "category": "assistive-technology",
       "surface": "windows-screen-reader",
-      "artifact_scopes": ["web", "windows-app", "document"],
+      "artifact_scopes": [
+        "web",
+        "windows-app",
+        "document"
+      ],
       "access": "built-in",
       "engine_family": "Narrator",
       "independence": "assistive-technology",
@@ -799,7 +909,11 @@
       "provider": "Freedom Scientific",
       "category": "assistive-technology",
       "surface": "windows-magnifier-reader",
-      "artifact_scopes": ["web", "windows-app", "document"],
+      "artifact_scopes": [
+        "web",
+        "windows-app",
+        "document"
+      ],
       "access": "commercial",
       "engine_family": "ZoomText",
       "independence": "assistive-technology",
@@ -816,7 +930,11 @@
       "provider": "Apple",
       "category": "assistive-technology",
       "surface": "voice-operation-system",
-      "artifact_scopes": ["web", "ios-app", "macos-app"],
+      "artifact_scopes": [
+        "web",
+        "ios-app",
+        "macos-app"
+      ],
       "access": "built-in",
       "engine_family": "Apple Voice Control",
       "independence": "assistive-technology",
@@ -833,7 +951,10 @@
       "provider": "Google",
       "category": "assistive-technology",
       "surface": "voice-operation-system",
-      "artifact_scopes": ["web", "android-app"],
+      "artifact_scopes": [
+        "web",
+        "android-app"
+      ],
       "access": "free",
       "engine_family": "Android Voice Access",
       "independence": "assistive-technology",
@@ -850,7 +971,11 @@
       "provider": "Apple",
       "category": "assistive-technology",
       "surface": "switch-input-system",
-      "artifact_scopes": ["web", "ios-app", "macos-app"],
+      "artifact_scopes": [
+        "web",
+        "ios-app",
+        "macos-app"
+      ],
       "access": "built-in",
       "engine_family": "Apple Switch Control",
       "independence": "assistive-technology",
@@ -867,7 +992,10 @@
       "provider": "Google",
       "category": "assistive-technology",
       "surface": "switch-input-system",
-      "artifact_scopes": ["web", "android-app"],
+      "artifact_scopes": [
+        "web",
+        "android-app"
+      ],
       "access": "free",
       "engine_family": "Android Switch Access",
       "independence": "assistive-technology",
@@ -884,7 +1012,11 @@
       "provider": "TPGi",
       "category": "specialized-signal",
       "surface": "desktop-inspection-tool",
-      "artifact_scopes": ["web", "desktop", "document"],
+      "artifact_scopes": [
+        "web",
+        "desktop",
+        "document"
+      ],
       "access": "free",
       "engine_family": "Colour Contrast Analyser",
       "independence": "inspection-tool",
@@ -901,7 +1033,9 @@
       "provider": "Trace Research and Development Center",
       "category": "specialized-signal",
       "surface": "video-analysis-tool",
-      "artifact_scopes": ["video"],
+      "artifact_scopes": [
+        "video"
+      ],
       "access": "free",
       "engine_family": "PEAT",
       "independence": "inspection-tool",
@@ -918,7 +1052,9 @@
       "provider": "Stark",
       "category": "specialized-signal",
       "surface": "design-tool-integration",
-      "artifact_scopes": ["design"],
+      "artifact_scopes": [
+        "design"
+      ],
       "access": "commercial",
       "engine_family": "Stark",
       "independence": "inspection-tool",
