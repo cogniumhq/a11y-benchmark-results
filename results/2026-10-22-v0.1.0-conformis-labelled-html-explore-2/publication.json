@@ -1,0 +1,29 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-10-22-v0.1.0-conformis-labelled-html-explore-2",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-10-23",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "469486a4811c5055de9d2524ede1ca520c2774c8",
+    "manifest_sha256": "sha256:a4e01bcd1281bfb1c1951657a815ad2da053e5e233c1d937dd7ed7227c03c9f0"
+  },
+  "harness": {
+    "repository": "cogniumhq/conformis",
+    "revision": "26ab6cc85a810f6b0a39d15f1953314dafdb4d03",
+    "path": "packs/a11y-html/bench/a11y-benchmark-2026-10"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "26ab6cc85a810f6b0a39d15f1953314dafdb4d03",
+    "latest_main_verified": "26ab6cc85a810f6b0a39d15f1953314dafdb4d03",
+    "latest_main_difference": "None. The executed commit is origin/main of cogniumhq/conformis, verified equal at import time. The bench corpus pin was used exactly as committed in the harness (469486a); it was not updated locally for this run. This run enabled depth-2 state exploration (--explore 2); the companion bundle 2026-10-22-v0.1.0-conformis-labelled-html is the same commit with exploration off."
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}

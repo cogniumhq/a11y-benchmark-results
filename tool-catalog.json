@@ -1,7 +1,7 @@
 {
   "format": "cognium-a11y-tool-catalog",
   "format_version": "1.0.0",
-  "reviewed_on": "2026-10-22",
+  "reviewed_on": "2026-10-23",
   "coverage_states": {
     "represented": "Named and classified, but no complete benchmark runner or protocol exists yet.",
     "executable": "A benchmark runner or protocol exists, but this catalog does not claim a completed result.",
@@ -46,8 +46,8 @@
       "maturity": "executed",
       "readiness": "current-result",
       "priority": "P0",
-      "version": "git:26ab6cc85a810f6b0a39d15f1953314dafdb4d03; a11y/html@1.6.1 + tech/html-aria@1.3.0",
-      "current_result": "results/2026-10-22-v0.1.0-conformis-labelled-html/cognium-conformis/result.json",
+      "version": "git:26ab6cc85a810f6b0a39d15f1953314dafdb4d03; a11y/html@1.6.1 + tech/html-aria@1.3.0 (state exploration depth 2)",
+      "current_result": "results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2/cognium-conformis/result.json",
       "source": "https://github.com/cogniumhq/conformis"
     },
     {

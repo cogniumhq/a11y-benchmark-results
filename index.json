@@ -189,6 +189,29 @@
       "bundle": "results/2026-10-22-v0.1.0-conformis-labelled-html",
       "report": "results/2026-10-22-v0.1.0-conformis-labelled-html/REPORT.md",
       "status": "current"
+    },
+    {
+      "id": "2026-10-22-v0.1.0-conformis-labelled-html-explore-2",
+      "classification": "maintainer-authored",
+      "corpus": {
+        "repository": "cogniumhq/a11y-benchmark",
+        "version": "v0.1.0",
+        "revision": "469486a4811c5055de9d2524ede1ca520c2774c8",
+        "manifest_sha256": "sha256:a4e01bcd1281bfb1c1951657a815ad2da053e5e233c1d937dd7ed7227c03c9f0"
+      },
+      "suite": "conformis-labelled-html",
+      "selected_cases": 230,
+      "corpus_cases": 270,
+      "tools": [
+        {
+          "name": "Cognium Conformis",
+          "version": "git:26ab6cc85a810f6b0a39d15f1953314dafdb4d03; a11y/html@1.6.1 + tech/html-aria@1.3.0 (state exploration depth 2)"
+        }
+      ],
+      "supersedes": null,
+      "bundle": "results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2",
+      "report": "results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2/REPORT.md",
+      "status": "current"
     }
   ]
 }
