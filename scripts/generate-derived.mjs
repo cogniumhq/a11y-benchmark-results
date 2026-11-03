@@ -221,7 +221,196 @@ function renderConformisLabelledReport(bundle, metrics) {
   return lines.join('\n');
 }
 
+// A re-run of an earlier bundle's lane from committed inputs. The words come from
+// `publication.rerun` (what was not committed before, what differs in the environment);
+// every number comes from this bundle and the baseline bundle it names.
+function renderRerunReport(bundle, metrics) {
+  const comparison = readJson(path.join(bundle, 'comparison.json'));
+  const publication = readJson(path.join(bundle, 'publication.json'));
+  const inventory = readJson(path.join(bundle, 'tool-surfaces.json'));
+  const results = resultFiles(bundle).map(readJson);
+  const rerun = publication.rerun;
+  const baseline = readJson(path.join(ROOT, 'results', rerun.baseline, 'comparison.json'));
+  const baselinePublication = readJson(path.join(ROOT, 'results', rerun.baseline, 'publication.json'));
+  const toolIds = comparison.tool_order;
+  const criterionToolIds = toolIds.filter((id) => metrics.tools[id].metric_family !== 'specialized markup signal');
+  const pairs = Object.entries(rerun.baseline_tools);
+  const rowOf = (snapshot, toolId, caseId) => snapshot.tools[toolId].cases.find(({ id }) => id === caseId);
+  const laneOf = (rows) => {
+    const ok = rows.filter(({ status }) => status === 'ok');
+    const tp = ok.filter(({ mode }) => mode === 'tp');
+    const safe = ok.filter(({ mode }) => mode === 'safe');
+    return {
+      pages: tp.filter((row) => row.matched_expected_criteria.length).length,
+      defects: tp.length,
+      matched: tp.reduce((n, row) => n + row.matched_expected_criteria.length, 0),
+      criteria: tp.reduce((n, row) => n + row.expected_criteria.length, 0),
+      clean: safe.filter((row) => !row.matched_expected_criteria.length).length,
+      controls: safe.length,
+      errors: rows.filter(({ status }) => status === 'error').length,
+    };
+  };
+  const differencesOf = (baseId, thisId) => comparison.cases.flatMap(({ id }) => {
+    const before = rowOf(baseline, baseId, id);
+    const after = rowOf(comparison, thisId, id);
+    const same = mark(before) === mark(after)
+      && before.matched_expected_criteria.join() === after.matched_expected_criteria.join();
+    return same ? [] : [{ id, mode: before.mode, expected: before.expected_criteria, before, after }];
+  });
+  const changed = new Map(pairs.map(([thisId, baseId]) => [thisId, new Set(differencesOf(baseId, thisId).map(({ id }) => id))]));
+  const baselineLabel = rerun.baseline_label ?? baselinePublication.run_local_date;
+  const fraction = (part, whole) => `${part}/${whole} (${pct(part, whole)})`;
+  const criteriaText = (row) => row.matched_expected_criteria.join(', ') || 'none';
+
+  const lines = [
+    `# ${rerun.title}`,
+    '',
+    `Published run date: ${publication.run_local_date} (${publication.timezone}).`,
+    '',
+    `Classification: **${publication.classification}**. Cognium maintains this corpus and makes Cognium Conformis, so this bundle is not an independent reproduction.`,
+    '',
+    'This is a single-run, finite-corpus detection comparison. It is not WCAG certification, legal advice, a universal product ranking, a performance benchmark or a guarantee about production websites.',
+    '',
+    rerun.purpose,
+    '',
+    '## Identity and scope',
+    '',
+    `- Corpus: \`${comparison.corpus.repository}@${comparison.corpus.version}\` (\`${comparison.corpus.revision}\`).`,
+    `- Corpus manifest: \`${comparison.corpus.manifest_sha256}\`.`,
+    `- Runner: \`${rerun.runner.repository}\` \`${rerun.runner.path}/\` at \`${rerun.runner.revision}\` ([review PR](${rerun.runner.pull_request})). Package lock SHA-256: \`${comparison.runner.package_lock_sha256}\`.`,
+    `- Cognium Conformis run source: \`${publication.cognium_conformis.repository}@${publication.cognium_conformis.revision}\` (private). ${publication.cognium_conformis.latest_main_difference}`,
+    `- Baseline: [\`${rerun.baseline}\`](../${rerun.baseline}/REPORT.md).`,
+    `- Executed automated lane: ${comparison.coverage.selected_cases}/${comparison.coverage.corpus_cases} corpus cases (${comparison.coverage.not_selected_cases} not executed), the baseline's case list in its order.`,
+    `- Human and assistive-technology protocols executed: 0/${comparison.coverage.human_protocols}.`,
+    '',
+    'The unexecuted cases and protocols are neither passes nor failures.',
+    '',
+    `## Comparison with ${baselineLabel}`,
+    '',
+    `Each row compares a product in this run with its column in \`${rerun.baseline}\` (${baselineLabel}), case by case. A case differs when its cell (\`T\`, \`o\`, \`.\`, \`E\`) or its matched declared criteria differ.`,
+    '',
+    `| Tool | Known-defect cases target-detected (${baselineLabel} → this run) | Declared criteria matched | Corrected controls target-clean | Errors | Cases that differ |`,
+    '|---|---:|---:|---:|---:|---:|',
+    ...pairs.map(([thisId, baseId]) => {
+      const before = laneOf(baseline.tools[baseId].cases);
+      const after = laneOf(comparison.tools[thisId].cases);
+      const label = comparison.tools[thisId].label === baseline.tools[baseId].label
+        ? comparison.tools[thisId].label
+        : `${baseline.tools[baseId].label} → ${comparison.tools[thisId].label}`;
+      return `| ${label} | ${before.pages}/${before.defects} → ${after.pages}/${after.defects} | ${before.matched}/${before.criteria} → ${after.matched}/${after.criteria} | ${before.clean}/${before.controls} → ${after.clean}/${after.controls} | ${before.errors} → ${after.errors} | ${changed.get(thisId).size} |`;
+    }),
+    '',
+    rerun.comparison_note,
+    '',
+  ];
+  for (const [thisId, baseId] of pairs) {
+    const differences = differencesOf(baseId, thisId);
+    if (!differences.length) continue;
+    lines.push(`### ${comparison.tools[thisId].label}: cases that differ`, '',
+      `| Case | Expected | Declared criteria | ${baselineLabel} | This run |`, '|---|---|---|---|---|');
+    for (const d of differences) {
+      lines.push(`| \`${d.id}\` | ${d.mode === 'tp' ? 'known defect' : 'corrected control'} | ${d.expected.join(', ')} | ${mark(d.before)} (${criteriaText(d.before)}) | ${mark(d.after)} (${criteriaText(d.after)}) |`);
+    }
+    const note = rerun.difference_notes?.[thisId];
+    lines.push('', ...(note ? [note, ''] : []));
+  }
+
+  lines.push('## Corrected controls: target-clean rate', '',
+    `The lane has ${metrics.tools[criterionToolIds[0]].control_cases} corrected controls. A control is target-clean when the tool reported none of the criteria the control declares in \`must_not_report\`. Target-clean is not a pass and not conformance: a tool with no rule for a criterion is target-clean on it by silence. A control that is not target-clean is a finding the corpus says should not be there.`, '',
+    '| Tool | Corrected controls target-clean | Controls with a declared-criterion finding |', '|---|---:|---|');
+  for (const id of criterionToolIds) {
+    const tool = metrics.tools[id];
+    const flagged = comparison.tools[id].cases
+      .filter(({ mode, status, matched_expected_criteria: matched }) => mode === 'safe' && status === 'ok' && matched.length)
+      .map((row) => `\`${row.id}\` (${row.matched_expected_criteria.join(', ')})`);
+    lines.push(`| ${tool.name} | ${fraction(tool.controls_target_clean, tool.control_cases)} | ${flagged.join('; ') || 'none'} |`);
+  }
+  lines.push('');
+
+  lines.push('## This run', '',
+    '| Tool | Known-defect cases target-detected | Declared criteria matched | Corrected controls target-clean | Completed | Errors |',
+    '|---|---:|---:|---:|---:|---:|',
+    ...criterionToolIds.map((id) => {
+      const item = metrics.tools[id];
+      return `| ${item.name} | ${fraction(item.defect_cases_target_detected, item.defect_cases)} | ${fraction(item.expected_criteria_matched, item.expected_criteria)} | ${item.controls_target_clean}/${item.control_cases} | ${item.completed}/${item.cases} | ${item.errors} |`;
+    }),
+    '');
+  if (criterionToolIds.length > 1) {
+    lines.push(`The union of these ${criterionToolIds.length} configurations detected a declared criterion on ${fraction(metrics.union.defect_cases_target_detected, metrics.union.defect_cases)} known-defect cases. Lighthouse is axe-derived and Pa11y wraps HTML_CodeSniffer, so the union is not a count of independent engines.`, '');
+  }
+  if (rerun.reference_scorer) {
+    const scorer = rerun.reference_scorer;
+    lines.push('### Reference scorer', '', scorer.note, '',
+      '| Tool | True-positive recall (whole corpus) | Of attempted | Corrected-control false-positive assertions |',
+      '|---|---:|---:|---:|',
+      ...scorer.rows.map((row) => `| ${row.tool} | ${row.recall} | ${row.attempted} | ${row.false_positives} |`),
+      '');
+  }
+
+  if (rerun.uncommitted_inputs?.length) {
+    lines.push('## Inputs that were not committed before this run', '',
+      `What the ${baselineLabel} run depended on that a reader could not obtain from a commit, and where each input is pinned now.`, '',
+      '| Input | Before | Now |', '|---|---|---|',
+      ...rerun.uncommitted_inputs.map((item) => `| ${item.input} | ${item.before} | ${item.now} |`),
+      '');
+  }
+
+  lines.push('## Execution environment', '',
+    '| Tool | OS | Runtime | Browser | Viewport | Run window (UTC) |', '|---|---|---|---|---|---|',
+    ...results.map((result) => {
+      const run = result.run;
+      const environment = run.environment;
+      return `| ${run.tool.name} | ${environment.os} | ${environment.runtime} | ${environment.browser} ${environment.browser_version} | ${environment.viewport.width}×${environment.viewport.height} | ${run.started_at} – ${run.completed_at} |`;
+    }),
+    '',
+    `Differences from the ${baselineLabel} environment:`, '',
+    ...rerun.environment_differences.map((item) => `- ${item}`),
+    '');
+
+  lines.push('## Tool lineage', '', '| Tool | Version/build | Engine family | Independence | Interface |', '|---|---|---|---|---|',
+    ...results.map((result) => {
+      const tool = result.run.tool;
+      return `| ${tool.name} | ${tool.version} | ${tool.engine_family} | ${tool.independence}${tool.wrapper_of ? ` of ${tool.wrapper_of}` : ''} | ${tool.tool_surface} |`;
+    }),
+    '',
+    '## Product surface inventory', '',
+    '| Product surface | Version | Lane | Engine lineage | Status in this bundle | Metric treatment |', '|---|---|---|---|---|---|',
+    ...inventory.surfaces.map((surface) => {
+      const lineage = surface.lineage;
+      const engine = `${lineage.engine_family}${lineage.engine_version ? ` ${lineage.engine_version}` : ' (version not established)'}`;
+      const relationship = lineage.wrapper_of ? `${lineage.independence} of ${lineage.wrapper_of}` : lineage.independence;
+      return `| ${surface.name} | ${surface.version} | ${surface.measurement_lane} | ${engine}; ${relationship} | ${surface.execution_status} | ${surface.metric_treatment} |`;
+    }),
+    '',
+    'axe DevTools is inventoried but was not separately executed because its free automated checks run on axe-core; counting that surface as another independent engine result would duplicate the axe family. Accessibility Insights for Web is protocol-ready but not executed: its FastPass automated checks are axe-derived, while Needs Review, Tab Stops and Assessment require separate human-guided evidence. See [the Accessibility Insights protocol](manual/accessibility-insights-for-web/PROTOCOL.md) and [run plan](manual/accessibility-insights-for-web/run-plan.json).',
+    '');
+
+  const names = toolIds.map((id) => metrics.tools[id].name);
+  lines.push('## Case matrix', '',
+    `Legend: \`T\` declared target criterion detected; \`o\` another automated finding only; \`.\` no automated finding; \`E\` execution error. A trailing \`*\` marks a cell or matched-criterion set that differs from ${baselineLabel}.`, '',
+    `| Case | Expected | ${names.join(' | ')} |`, `|---|---|${names.map(() => '---:').join('|')}|`,
+    ...comparison.cases.map((item) => {
+      const cells = toolIds.map((id) => `${mark(rowOf(comparison, id, item.id))}${changed.get(id)?.has(item.id) ? '*' : ''}`);
+      return `| \`${item.id}\` | ${item.mode === 'tp' ? 'known defect' : 'corrected control'} | ${cells.join(' | ')} |`;
+    }),
+    '');
+
+  lines.push('## Evidence and interpretation limits', '',
+    '- One repetition per product. This bundle does not estimate run-to-run variance; the comparison with the baseline is two single runs.',
+    '- Native product outputs are represented by per-case SHA-256 digests. Raw Cognium Conformis proofgraph evidence and raw third-party outputs are not redistributed.',
+    '- Criterion credit requires an explicit native-rule-to-WCAG mapping. A tool can report another issue and receive no target credit.',
+    '- `cannot-tell` is preserved when no mapped finding exists. It is never converted into pass.',
+    '- Durations are diagnostic only and are not a speed ranking.',
+    ...rerun.limits.map((item) => `- ${item}`),
+    '- Corrections must publish a new immutable revision and retain this bundle with a supersession link.',
+    '',
+    'See [method.md](method.md), [metrics.json](metrics.json), [comparison.json](comparison.json) and each product’s schema-valid `result.json`.',
+    '');
+  return lines.join('\n');
+}
+
 function renderReport(bundle, metrics) {
+  if (readJson(path.join(bundle, 'publication.json')).rerun) return renderRerunReport(bundle, metrics);
   const comparison = readJson(path.join(bundle, 'comparison.json'));
   if (comparison.suite.name === 'conformis-labelled-html') {
     return renderConformisLabelledReport(bundle, metrics);

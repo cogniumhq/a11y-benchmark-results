@@ -1,0 +1,164 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-11-02-rerun-v0.1.0-latest-browser-served",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-11-02",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "469486a4811c5055de9d2524ede1ca520c2774c8",
+    "manifest_sha256": "sha256:a4e01bcd1281bfb1c1951657a815ad2da053e5e233c1d937dd7ed7227c03c9f0"
+  },
+  "harness": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "path": "comparison",
+    "revision": "101112de2a3ba81af328c562363aac74181ea324",
+    "pull_request": "https://github.com/cogniumhq/a11y-benchmark/pull/72"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "28f9e14db3a095f3d5983a947f233c99772a2b25",
+    "latest_main_verified": "7fa92329e835146d240ea8bb8d3c420a8e653829",
+    "latest_main_difference": "This is the 2026-10-13 run's revision, chosen to reproduce that run. Main was `7fa92329`, 733 commits later, on 2026-11-02; it is measured in `2026-11-02-rerun-v0.1.0-latest-browser-served-conformis-main`."
+  },
+  "rerun": {
+    "kind": "reproduction",
+    "title": "Accessibility benchmark re-run: latest browser-served lane from committed inputs",
+    "baseline": "2026-10-13-v0.1.0-latest-browser-served",
+    "baseline_tools": {
+      "cognium": "cognium",
+      "axe": "axe",
+      "pa11y-htmlcs": "pa11y-htmlcs",
+      "ibm": "ibm",
+      "lighthouse": "lighthouse",
+      "alfa": "alfa",
+      "qualweb": "qualweb"
+    },
+    "purpose": "This bundle repeats the 2026-10-13 latest-browser-served lane with every tool, case list, subject declaration and mapping taken from a commit, at the same product versions and corpus revision, to test whether that result can be repeated from committed inputs. Nu Html Checker, a markup-signal lane outside the criterion metrics, was not repeated.",
+    "runner": {
+      "repository": "cogniumhq/a11y-benchmark",
+      "path": "comparison",
+      "revision": "101112de2a3ba81af328c562363aac74181ea324",
+      "pull_request": "https://github.com/cogniumhq/a11y-benchmark/pull/72"
+    },
+    "comparison_note": "All seven configurations give the same lane metrics as on 2026-10-13. Six give the same outcome on every one of the 214 cases. Cognium Conformis differs on two cases, listed below; neither changes a metric. Below the case level, one QualWeb native finding differs: on `static-anim_no_reduced_motion` the contrast rule `act-rules:QW-ACT-R37` (1.4.3, not the declared 2.2.2) fired in this run and not on 2026-10-13; that cell was `o` in both runs.",
+    "difference_notes": {
+      "cognium": "On both live-caption pages the keyboard-trap control `AX-08/2.1.2` reported a deviation under 2.1.2, which neither page declares, so each cell moves from `.` to `o` and no metric changes. The same control reported the same deviation on `media-video_no_captions` in both runs. The browser build differs between the runs (Chromium 153.0.8010.12 here, 149.0.7827.0 on 2026-10-13), and how Chromium exposes a media element to keyboard focus is a plausible source; this run does not isolate it."
+    },
+    "reference_scorer": {
+      "note": "The reference scorer of the pinned corpus revision (`check/score.mjs` at `469486a4`, policy `cognium-a11y-scoring/1.0.0`, `--strict`), applied to each product's `result.json` in this bundle. Recall counts the 18 known-defect assertions outside this lane as not run; false positives are assertion-level, over the 192 `must_not_report` assertions of the 104 corrected controls. The 2026-10-13 bundle's result files give the same figures.",
+      "rows": [
+        {
+          "tool": "Cognium Conformis",
+          "recall": "71/207 (34.3%)",
+          "attempted": "71/189 (37.6%)",
+          "false_positives": "0/192 (0.0%)"
+        },
+        {
+          "tool": "axe-core",
+          "recall": "15/207 (7.2%)",
+          "attempted": "15/189 (7.9%)",
+          "false_positives": "0/192 (0.0%)"
+        },
+        {
+          "tool": "Pa11y / HTML_CodeSniffer",
+          "recall": "11/207 (5.3%)",
+          "attempted": "11/189 (5.8%)",
+          "false_positives": "1/192 (0.5%)"
+        },
+        {
+          "tool": "IBM Equal Access",
+          "recall": "31/207 (15.0%)",
+          "attempted": "31/189 (16.4%)",
+          "false_positives": "0/192 (0.0%)"
+        },
+        {
+          "tool": "Lighthouse accessibility",
+          "recall": "15/207 (7.2%)",
+          "attempted": "15/189 (7.9%)",
+          "false_positives": "0/192 (0.0%)"
+        },
+        {
+          "tool": "Siteimprove Alfa",
+          "recall": "20/207 (9.7%)",
+          "attempted": "20/189 (10.6%)",
+          "false_positives": "1/192 (0.5%)"
+        },
+        {
+          "tool": "QualWeb",
+          "recall": "59/207 (28.5%)",
+          "attempted": "59/189 (31.2%)",
+          "false_positives": "2/192 (1.0%)"
+        }
+      ]
+    },
+    "uncommitted_inputs": [
+      {
+        "input": "Comparison harness: adapters, configurations, native-rule-to-WCAG mappings",
+        "before": "A private repository (`cogniumhq/a11y-validation` at `32edddfa`)",
+        "now": "`comparison/run.mjs`, restated; the one addition records a Lighthouse runtime error as an execution error (none occurred)"
+      },
+      {
+        "input": "Package lock for the seven tools",
+        "before": "In the private harness repository",
+        "now": "`comparison/package.json` and `package-lock.json`; the runner refuses a different install"
+      },
+      {
+        "input": "IBM Equal Access rule engine",
+        "before": "Downloaded at run time from a CDN: the archive list of the moving `accessibility-checker-engine@next` tag (4.0.29), then engine 4.0.27 for archive `13July2026`. The published label 4.0.34 is the checker, not the rule engine",
+        "now": "Both are locked packages, served to the checker on 127.0.0.1"
+      },
+      {
+        "input": "The 214-case lane",
+        "before": "Projected after the run from a `--suite all` run by dropping the 38 pages the corpus server did not serve; the projection was not committed",
+        "now": "`comparison/suites/latest-browser-served.json`, checked against the corpus at the pinned revision"
+      },
+      {
+        "input": "Corpus revision",
+        "before": "The harness's committed fixture lock named an earlier revision (`0105c659`); `469486a4` was supplied as a local checkout",
+        "now": "`comparison/pins.json`; the runner refuses another revision or manifest, or a checkout with local changes"
+      },
+      {
+        "input": "Cognium Conformis subject declaration (214 entry pages, origin, no flows)",
+        "before": "A local file",
+        "now": "`comparison/cognium/latest-browser-served-subject.yaml`"
+      },
+      {
+        "input": "Cognium Conformis command and importer",
+        "before": "The command was not recorded; the importer was in the private harness",
+        "now": "`comparison/README.md` and `comparison/import-cognium.mjs`"
+      },
+      {
+        "input": "Cognium Conformis runtime",
+        "before": "Private repository at `28f9e14d`",
+        "now": "Unchanged: still private, pinned by commit. Repeating the Cognium column needs access to that repository"
+      },
+      {
+        "input": "Browser builds",
+        "before": "Chromium 149.0.7827.55 (Playwright 1.61.1) and 149.0.7827.0 (Conformis image), recorded but not obtainable from a commit",
+        "now": "Recorded; the runner takes `--chromium` and records the version. This run used 153.0.8010.12"
+      }
+    ],
+    "environment_differences": [
+      "Linux on x86_64 with 2 vCPUs for every tool. On 2026-10-13 the direct tools ran on macOS/arm64 and Cognium Conformis on Linux/arm64.",
+      "Chromium 153.0.8010.12 for every tool, against 149.0.7827.55 (direct tools) and 149.0.7827.0 (Conformis). The 2026-10-13 builds could not be installed: browser downloads and the image registry were unreachable from the run host.",
+      "Node.js v22.23.4, against v25.9.0 for the direct tools.",
+      "Cognium Conformis browser passes ran in place through a local stand-in for `docker`, not in the pinned Playwright image: same mounts, same declared environment, no network where the pass declares none; the host's Chromium and fonts instead of the image's. See method.md.",
+      "Host fonts (Conformis records `sans-serif` as Inter) instead of the macOS and image font sets.",
+      "IBM rules served from the package lock on 127.0.0.1 instead of a CDN; the archive label on every page matches 2026-10-13.",
+      "The direct tools and the Conformis scan ran concurrently on the same CPUs."
+    ],
+    "limits": [
+      "This run reproduces counts and case outcomes under a different OS, CPU architecture, browser build and font set. It does not show those factors have no effect on other corpora or other product versions.",
+      "Nu Html Checker was not executed. It is outside the criterion metrics.",
+      "No flows or state drivers were declared, as on 2026-10-13: the lane measures loaded entry pages.",
+      "The Cognium Conformis column depends on a private runtime. The other six columns can be repeated from public inputs alone."
+    ]
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}
