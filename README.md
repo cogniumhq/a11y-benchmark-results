@@ -63,6 +63,13 @@ traceability.
 Its report also scores this run and those October products on the 196 cases
 whose assertion did not change.
 
+`2026-11-02-rerun-v0.1.0-latest-browser-served` repeats the 2026-10-13
+latest-browser-served lane from committed inputs: the runner, package lock,
+case list and Cognium Conformis subject are in `cogniumhq/a11y-benchmark`
+`comparison/`. Its report compares every product with 2026-10-13 case by case.
+`2026-11-02-rerun-v0.1.0-latest-browser-served-conformis-main` runs Cognium
+Conformis at `main` on the same lane, corpus revision and host.
+
 ## Validate
 
 ```sh
