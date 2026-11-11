@@ -70,6 +70,12 @@ case list and Cognium Conformis subject are in `cogniumhq/a11y-benchmark`
 `2026-11-02-rerun-v0.1.0-latest-browser-served-conformis-main` runs Cognium
 Conformis at `main` on the same lane, corpus revision and host.
 
+`2026-11-09-v0.1.0-latest-browser-served-conformis-main` runs Cognium Conformis
+at `main` (`d4eb53a`, `a11y/html@1.8.0`, `tech/html-aria@1.4.0`) on that same
+214-page lane and corpus revision. It is compared with the 2026-11-02 main
+run. The same evening's re-run of the six direct tools matched the 2026-11-02
+columns on every case and is not a separate bundle.
+
 ## Validate
 
 ```sh

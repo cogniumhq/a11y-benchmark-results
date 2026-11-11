@@ -12,5 +12,6 @@ A listing means the bundle passes format and disclosure validation. It is not ce
 | [`2026-10-22-v0.1.0-conformis-labelled-html-explore-2`](results/2026-10-22-v0.1.0-conformis-labelled-html-explore-2/REPORT.md) | maintainer-authored | `v0.1.0` | `conformis-labelled-html` | 230/270 | 1 | current |
 | [`2026-11-02-rerun-v0.1.0-latest-browser-served`](results/2026-11-02-rerun-v0.1.0-latest-browser-served/REPORT.md) | maintainer-authored | `v0.1.0` | `latest-browser-served` | 214/270 | 7 | current |
 | [`2026-11-02-rerun-v0.1.0-latest-browser-served-conformis-main`](results/2026-11-02-rerun-v0.1.0-latest-browser-served-conformis-main/REPORT.md) | maintainer-authored | `v0.1.0` | `latest-browser-served` | 214/270 | 1 | current |
+| [`2026-11-09-v0.1.0-latest-browser-served-conformis-main`](results/2026-11-09-v0.1.0-latest-browser-served-conformis-main/REPORT.md) | maintainer-authored | `v0.1.0` | `latest-browser-served` | 214/270 | 1 | current |
 
 Classifications are declared by the publisher. Corrections add a new immutable bundle and retain the superseded entry.
