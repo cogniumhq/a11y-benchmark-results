@@ -76,6 +76,14 @@ at `main` (`d4eb53a`, `a11y/html@1.8.0`, `tech/html-aria@1.4.0`) on that same
 run. The same evening's re-run of the six direct tools matched the 2026-11-02
 columns on every case and is not a separate bundle.
 
+`2026-11-24-v0.1.0-latest-browser-served-conformis-main` runs Cognium Conformis
+at `main` (`6de5c4e8`, `a11y/html@1.9.0`, `tech/html-aria@1.4.0`) on the same
+214-page case list, but against corpus `30e5f3ea` rather than `469486a4`. Each
+case is classified from the corpus the run used, so the denominators move with
+it: 107 known defects and 107 corrected controls, not 110 and 104. Its report
+compares with the 2026-11-09 main run and names the one corrected control this
+run reports a finding on.
+
 ## Validate
 
 ```sh

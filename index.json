@@ -305,6 +305,29 @@
       "bundle": "results/2026-11-09-v0.1.0-latest-browser-served-conformis-main",
       "report": "results/2026-11-09-v0.1.0-latest-browser-served-conformis-main/REPORT.md",
       "status": "current"
+    },
+    {
+      "id": "2026-11-24-v0.1.0-latest-browser-served-conformis-main",
+      "classification": "maintainer-authored",
+      "corpus": {
+        "repository": "cogniumhq/a11y-benchmark",
+        "version": "v0.1.0",
+        "revision": "30e5f3eaaa59ad4ecf3011b7fb397e233c26a878",
+        "manifest_sha256": "sha256:6ec8c1b092945c9b86c586f338019eed3bf63a6e6ba983a75ed05cc7e5ca8c84"
+      },
+      "suite": "latest-browser-served",
+      "selected_cases": 214,
+      "corpus_cases": 397,
+      "tools": [
+        {
+          "name": "Cognium Conformis",
+          "version": "git:6de5c4e8dbc50b4de671f6760cf571b4dca11eaa; a11y/html@1.9.0 + tech/html-aria@1.4.0"
+        }
+      ],
+      "supersedes": null,
+      "bundle": "results/2026-11-24-v0.1.0-latest-browser-served-conformis-main",
+      "report": "results/2026-11-24-v0.1.0-latest-browser-served-conformis-main/REPORT.md",
+      "status": "current"
     }
   ]
 }

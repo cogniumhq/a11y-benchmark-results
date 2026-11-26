@@ -1,0 +1,76 @@
+{
+  "format": "cognium-a11y-benchmark-publication",
+  "format_version": "1.0.0",
+  "id": "2026-11-24-v0.1.0-latest-browser-served-conformis-main",
+  "classification": "maintainer-authored",
+  "run_local_date": "2026-11-24",
+  "timezone": "America/Los_Angeles",
+  "supersedes": null,
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "30e5f3eaaa59ad4ecf3011b7fb397e233c26a878",
+    "manifest_sha256": "sha256:6ec8c1b092945c9b86c586f338019eed3bf63a6e6ba983a75ed05cc7e5ca8c84"
+  },
+  "harness": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "path": "comparison",
+    "revision": "583d6d1bf66de0e819864063375039c7c75a0194",
+    "pull_request": "https://github.com/cogniumhq/a11y-benchmark/pull/99"
+  },
+  "cognium_conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "6de5c4e8dbc50b4de671f6760cf571b4dca11eaa",
+    "latest_main_verified": "6de5c4e8dbc50b4de671f6760cf571b4dca11eaa",
+    "latest_main_difference": "This is `main` as the 2026-11-24 nightly found it (`6de5c4e8`), 166 commits after the 2026-11-09 run's revision `d4eb53a`. `main` has advanced since the run; this bundle measures the commit the run measured, not the tip at publication."
+  },
+  "rerun": {
+    "kind": "current-product",
+    "title": "Accessibility benchmark: Cognium Conformis at main on the latest browser-served lane",
+    "baseline": "2026-11-09-v0.1.0-latest-browser-served-conformis-main",
+    "baseline_label": "Conformis d4eb53a",
+    "baseline_tools": {
+      "cognium": "cognium"
+    },
+    "purpose": "This bundle runs Cognium Conformis at `main` (`6de5c4e8`) on the same 214-page case list, in the same order, as `2026-11-09-v0.1.0-latest-browser-served-conformis-main`. It is NOT at the same corpus revision: the baseline is pinned at `469486a4` and this run ran against `30e5f3ea`, 52 commits later. Each case is scored as the corpus of THIS run declares it, so three cases that upstream reclassified from known defect to corrected control move denominators. Read the comparison as two runs of the same product against two revisions of the same ground truth, not as a like-for-like delta. No other product was run.",
+    "runner": {
+      "repository": "cogniumhq/a11y-benchmark",
+      "path": "comparison",
+      "revision": "583d6d1bf66de0e819864063375039c7c75a0194",
+      "pull_request": "https://github.com/cogniumhq/a11y-benchmark/pull/99"
+    },
+    "comparison_note": "The two columns do not share a denominator. Between `469486a4` and `30e5f3ea` the corpus moved `scenario-forced_colors`, `media-captions_unlabelled_track` and `flash-three_flashes_exactly` from known defect to corrected control, so this run has 107 known defects and 107 corrected controls where the baseline had 110 and 104, and 183 declared criteria where the baseline had 189 (`scenario-dragging_required` lost 2.5.1, `surface-email_contrast_darkmode` lost 1.4.1, `flash-three_flashes_exactly` gained 2.3.1, and each of their safe twins moved with them). Eighteen cases changed cell or matched criteria. Nine known-defect cases that matched nothing on the baseline now match a declared criterion, and nine already-detected keyboard and ARIA-pattern cases regain `AX-05/4.1.2` alongside 2.1.1. Nothing that the baseline detected is lost. One of the nine new matches, `scenario-forced_colors`, is a FALSE POSITIVE rather than a gain: at this corpus revision the case is a corrected control that declares 1.4.1 and 1.4.11 in `must_not_report`, and this run reports both. Eight of the nine pages are byte-identical across the two pins; `scenarios/forced_colors.html` changed only in its prose header, which now states that passing 1.4.1 and 1.4.11 is the expected outcome. Scored at the baseline's stale classification the lane would read 72/110, 101/189 and 104/104 with no false positive; that is the figure `a11y-bench` reported on this run and it is not what the run measured (cogniumhq/conformis#862).",
+    "difference_notes": {
+      "cognium": "The nine known-defect cases that go from no declared match to a detection are `static-ambiguous_link_purpose` (2.4.4), `patterns-accordion` (4.1.2), `patterns-form-errors` (3.3.1), `state-loading` (4.1.3), `state-invalid` (3.3.1), `state-submitted` (4.1.3), `scenario-async_validation` (4.1.3), `scenario-infinite_scroll` (4.1.3) and `scenario-forced_colors` (1.4.1 and 1.4.11). The last of those is the false positive described above: it is a corrected control at this corpus revision. The nine cases that add `4.1.2` to an existing 2.1.1 detection are `keyboard-div_button`, `keyboard-div_text_field`, `keyboard-div_checkbox`, `patterns-disclosure`, `patterns-dialog`, `patterns-combobox`, `patterns-menu`, `patterns-switch` and `patterns-listbox`; `AX-05/4.1.2` had stopped firing on them between the 2026-11-02 and 2026-11-09 runs and fires again at `a11y/html@1.9.0`. Thirty-six known-defect cases still match nothing; 2.4.3 (9 cases), 4.1.3 (9) and 1.3.1 (8) remain the largest standing gaps."
+    },
+    "reference_scorer": {
+      "note": "The reference scorer of this run's corpus revision (`check/score.mjs` at `30e5f3ea`, policy `cognium-a11y-scoring/1.1.0`, `--strict`) applied to this bundle's `result.json`. The baseline bundle quoted the scorer at `469486a4` under policy `1.0.0`, which gave 82/207 (39.6%), 82/189 (43.4%) and 0/192 for `d4eb53a`; neither the corpus revision nor the scoring policy is the same, so the two rows are not a delta.",
+      "rows": [
+        {
+          "tool": "Cognium Conformis",
+          "recall": "99/262 (37.8%)",
+          "attempted": "99/183 (54.1%)",
+          "false_positives": "2/278 (0.7%)"
+        }
+      ]
+    },
+    "uncommitted_inputs": [],
+    "environment_differences": [
+      "The corpus revision moved from `469486a4` to `30e5f3ea` (52 commits). Case classification and declared criteria are taken from the corpus this run ran against, not from the baseline bundle.",
+      "Conformis at `6de5c4e8` uses browser driver 0.28.5 and static-html driver 0.4.2 (0.28.1 and 0.4.1 at `d4eb53a`), and packs `a11y/html@1.9.0` and `tech/html-aria@1.4.0` (`1.8.0` and `1.4.0` at `d4eb53a`).",
+      "The scan ran unattended on the `a11y-bench` nightly workflow (cogniumhq/conformis run 45397881016) on a self-hosted Linux x86_64 runner, in the same pinned Playwright image and with the same Chromium 149.0.7827.55 and 1280x900 viewport as the baseline.",
+      "The comparison snapshot in this bundle was assembled later from that run's published artifact, on darwin/arm64 with Node.js v25.9.0. That step re-reads and re-scores the sanitized export; it performs no measurement. `comparison.json`'s top-level `environment` block records that assembly host, while the measurement environment is `tools.cognium.source.environment`.",
+      "This scan ran alone. It did not pass `--explore`, `--bench-run` or `--axe-cross-check`."
+    ],
+    "limits": [
+      "One repetition. The difference from `d4eb53a` is two single runs against two corpus revisions, so product change and ground-truth change are not separable case by case except where this bundle names them.",
+      "`scenario-forced_colors` is an open false positive against `a11y/html@1.9.0`: the corpus states that passing 1.4.1 and 1.4.11 is the expected outcome there and the product reports both.",
+      "`a11y/html@1.9.0` and `tech/html-aria@1.4.0` are workspace versions at `6de5c4e8`, not published registry versions; the commit is the pin. The repository is private.",
+      "The case list is still the 2026-10-13 published lane's 214 pages in its order. Cases the corpus added after `469486a4` are not measured here, so the lane is a fixed subset of a corpus that has grown.",
+      "No flows or state drivers were declared: the lane measures loaded entry pages. The inventory probe does not click on this live run unless `--bench-run` is passed, and it was not."
+    ]
+  },
+  "contact": {
+    "issues": "https://github.com/cogniumhq/a11y-benchmark-results/issues"
+  }
+}
